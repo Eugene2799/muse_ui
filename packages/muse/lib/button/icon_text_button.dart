@@ -1,0 +1,81 @@
+import 'package:flutter/material.dart';
+
+class IconTextButton extends TextButton{
+  IconTextButton({
+    super.key,
+    required super.onPressed,
+    super.onLongPress,
+    super.onHover,
+    super.onFocusChange,
+    super.style,
+    super.focusNode,
+    bool? autofocus,
+    double? gap,
+    super.clipBehavior,
+    super.statesController,
+    required Widget icon,
+    required Widget label,
+    IconAlignment? iconAlignment,
+  }) : super(
+    autofocus: autofocus ?? false,
+    child: _MuseTextButtonWithIconChild(
+      icon: icon,
+      label: label,
+      gap: gap ?? 4.0,
+      buttonStyle: style,
+      iconAlignment: iconAlignment,
+    ),
+  );
+
+  @override
+  ButtonStyle defaultStyleOf(BuildContext context) {
+    final bool useMaterial3 = Theme.of(context).useMaterial3;
+    final ButtonStyle buttonStyle = super.defaultStyleOf(context);
+    final double defaultFontSize =
+        buttonStyle.textStyle?.resolve(const <WidgetState>{})?.fontSize ?? 14.0;
+    final double effectiveTextScale =
+        MediaQuery.textScalerOf(context).scale(defaultFontSize) / 14.0;
+    final EdgeInsetsGeometry scaledPadding = ButtonStyleButton.scaledPadding(
+      useMaterial3 ? const EdgeInsetsDirectional.fromSTEB(12, 8, 16, 8) : const EdgeInsets.all(8),
+      const EdgeInsets.symmetric(horizontal: 4),
+      const EdgeInsets.symmetric(horizontal: 4),
+      effectiveTextScale,
+    );
+    return buttonStyle.copyWith(
+      padding: WidgetStatePropertyAll<EdgeInsetsGeometry>(scaledPadding),
+    );
+  }
+}
+
+class _MuseTextButtonWithIconChild extends StatelessWidget {
+  const _MuseTextButtonWithIconChild({
+    required this.label,
+    required this.icon,
+    required this.buttonStyle,
+    required this.iconAlignment,
+    required this.gap,
+  });
+
+  final Widget label;
+  final Widget icon;
+  final ButtonStyle? buttonStyle;
+  final IconAlignment? iconAlignment;
+  final double gap;
+
+  @override
+  Widget build(BuildContext context) {
+    final TextButtonThemeData textButtonTheme = TextButtonTheme.of(context);
+    final IconAlignment effectiveIconAlignment =
+        iconAlignment ??
+            textButtonTheme.style?.iconAlignment ??
+            buttonStyle?.iconAlignment ??
+            IconAlignment.start;
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children:
+      effectiveIconAlignment == IconAlignment.start
+          ? <Widget>[icon, SizedBox(width: gap), Flexible(child: label)]
+          : <Widget>[Flexible(child: label), SizedBox(width: gap), icon],
+    );
+  }
+}
