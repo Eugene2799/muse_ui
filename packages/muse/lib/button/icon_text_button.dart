@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class IconTextButton extends TextButton{
+class IconTextButton extends TextButton {
   IconTextButton({
     super.key,
     required super.onPressed,
@@ -14,18 +14,18 @@ class IconTextButton extends TextButton{
     super.clipBehavior,
     super.statesController,
     required Widget icon,
-    required Widget label,
+    Widget? label,
     IconAlignment? iconAlignment,
   }) : super(
-    autofocus: autofocus ?? false,
-    child: _MuseTextButtonWithIconChild(
-      icon: icon,
-      label: label,
-      gap: gap ?? 4.0,
-      buttonStyle: style,
-      iconAlignment: iconAlignment,
-    ),
-  );
+         autofocus: autofocus ?? false,
+         child: _MuseTextButtonWithIconChild(
+           icon: icon,
+           label: label,
+           gap: gap ?? 8.0,
+           buttonStyle: style,
+           iconAlignment: iconAlignment,
+         ),
+       );
 
   @override
   ButtonStyle defaultStyleOf(BuildContext context) {
@@ -36,7 +36,9 @@ class IconTextButton extends TextButton{
     final double effectiveTextScale =
         MediaQuery.textScalerOf(context).scale(defaultFontSize) / 14.0;
     final EdgeInsetsGeometry scaledPadding = ButtonStyleButton.scaledPadding(
-      useMaterial3 ? const EdgeInsetsDirectional.fromSTEB(12, 8, 16, 8) : const EdgeInsets.all(8),
+      useMaterial3
+          ? const EdgeInsetsDirectional.fromSTEB(12, 8, 16, 8)
+          : const EdgeInsets.all(8),
       const EdgeInsets.symmetric(horizontal: 4),
       const EdgeInsets.symmetric(horizontal: 4),
       effectiveTextScale,
@@ -56,7 +58,7 @@ class _MuseTextButtonWithIconChild extends StatelessWidget {
     required this.gap,
   });
 
-  final Widget label;
+  final Widget? label;
   final Widget icon;
   final ButtonStyle? buttonStyle;
   final IconAlignment? iconAlignment;
@@ -67,15 +69,23 @@ class _MuseTextButtonWithIconChild extends StatelessWidget {
     final TextButtonThemeData textButtonTheme = TextButtonTheme.of(context);
     final IconAlignment effectiveIconAlignment =
         iconAlignment ??
-            textButtonTheme.style?.iconAlignment ??
-            buttonStyle?.iconAlignment ??
-            IconAlignment.start;
+        textButtonTheme.style?.iconAlignment ??
+        buttonStyle?.iconAlignment ??
+        IconAlignment.start;
+    final Widget labelBox =
+        label != null ? Flexible(child: label!) : SizedBox();
     return Row(
       mainAxisSize: MainAxisSize.min,
       children:
-      effectiveIconAlignment == IconAlignment.start
-          ? <Widget>[icon, SizedBox(width: gap), Flexible(child: label)]
-          : <Widget>[Flexible(child: label), SizedBox(width: gap), icon],
+          effectiveIconAlignment == IconAlignment.start
+              ? _getList(icon, gap, labelBox)
+              : _getList(labelBox, gap, icon),
     );
+  }
+
+  List<Widget> _getList(Widget left, double gap, Widget right) {
+    return gap == 0.0
+        ? <Widget>[left, right]
+        : <Widget>[left, SizedBox(width: gap), right];
   }
 }

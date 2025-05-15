@@ -20,6 +20,7 @@ class MuseButton extends StatefulWidget {
     this.iconPrefix,
     this.loadingType = LoadingType.circular,
     this.iconPosition = IconAlignment.start,
+    this.iconGap,
     this.click,
     this.longPress,
     this.slot,
@@ -39,6 +40,7 @@ class MuseButton extends StatefulWidget {
   final IconData? iconPrefix;
   final LoadingType loadingType;
   final IconAlignment iconPosition;
+  final double? iconGap;
 
   final VoidCallback? click;
   final VoidCallback? longPress;
@@ -128,7 +130,11 @@ class _MuseButtonState extends State<MuseButton> {
     );
 
     if (iconData != null) {
-      iconStates = (icon: iconData, position: widget.iconPosition);
+      iconStates = (
+        icon: iconData,
+        position: widget.iconPosition,
+        gap: widget.iconGap,
+      );
     }
     switch (widget.nativeType) {
       case ButtonNativeType.normal:
@@ -141,10 +147,10 @@ class _MuseButtonState extends State<MuseButton> {
   }
 }
 
-Widget _getButtonChild(ButtonStates state, ButtonStyles style) {
+Widget? _getButtonChild(ButtonStates state, ButtonStyles style) {
   if (state.slot != null) return state.slot!;
   if (state.text != null) return Text(state.text!);
-  return SizedBox();
+  return null;
 }
 
 Widget _normalButton(
@@ -191,7 +197,7 @@ Widget _normalButton(
             ),
     onPressed: state.click,
     onLongPress: state.longPress,
-    label: _getButtonChild(state, style),
+    label: _getButtonChild(state, style) ?? Text(''),
   );
 }
 
@@ -202,7 +208,9 @@ Widget _textButton(
 ]) {
   ButtonStyle bs = ButtonStyle(
     overlayColor: WidgetStateProperty.all(Colors.transparent),
-    padding: WidgetStateProperty.all(EdgeInsets.all(0)),
+    padding: WidgetStateProperty.all(
+      EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+    ),
     textStyle: WidgetStateProperty.all(TextStyle(fontSize: style.size.size)),
     foregroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
       if (states.contains(WidgetState.pressed)) {
@@ -222,13 +230,18 @@ Widget _textButton(
       style: bs,
       onPressed: state.click,
       onLongPress: state.longPress,
-      child: _getButtonChild(state, style),
+      child: _getButtonChild(state, style)!,
     );
   } else {
     return IconTextButton(
       style: bs,
       iconAlignment: icon.position,
-      icon: Icon(icon.icon, size: style.size.size),
+      gap: icon.gap,
+      icon: Icon(
+        icon.icon,
+        size: style.size.size,
+        color: style.colors.fontColor,
+      ),
       onPressed: state.click,
       onLongPress: state.longPress,
       label: _getButtonChild(state, style),
@@ -276,6 +289,6 @@ Widget _plainButton(
             ),
     onPressed: state.click,
     onLongPress: state.longPress,
-    label: _getButtonChild(state, style),
+    label: _getButtonChild(state, style) ?? Text(''),
   );
 }

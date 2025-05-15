@@ -14,7 +14,7 @@ enum ButtonType {
 
 enum ButtonBorderType {
   normal(2.0),
-  round(18.0),
+  round(999.0),
   square(0.0);
 
   final double radius;
@@ -61,4 +61,5 @@ typedef ButtonStyles =
       bool hairline,
     });
 
-typedef ButtonIconStates = ({IconData icon, IconAlignment position});
+typedef ButtonIconStates =
+    ({IconData icon, IconAlignment position, double? gap});
