@@ -37,15 +37,13 @@ enum ButtonSize {
 
 enum ButtonIconPosition { left, right }
 
-enum LoadingType { spinner, circular }
-
 typedef ButtonColors = ({Color fontColor, Color bgColor, Color borderColor});
 
 typedef ButtonStates =
     ({
       String? text,
       ButtonType type,
-      bool loading,
+      ButtonNativeType nativeType,
       bool disabled,
       bool autofocus,
       VoidCallback? click,
