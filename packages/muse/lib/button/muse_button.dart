@@ -51,33 +51,22 @@ class _MuseButtonState extends State<MuseButton> {
   ButtonIconStates? iconStates;
 
   IconData? getIconData() {
-    if (widget.icon != null) return widget.icon!;
-    if (widget.iconPrefix != null) return widget.iconPrefix!;
-    return null;
+    return widget.icon ?? widget.iconPrefix;
   }
 
   ButtonColors getColor(Color font, Color bg, Color border) {
     bool isNormal = widget.type == ButtonType.normal;
-    Color realFontColor = font;
-    Color realBgColor = bg;
-    if (isNormal) realFontColor = Color(0xFF969799);
-    if (isNormal && widget.nativeType == ButtonNativeType.normal) {
-      realBgColor = Colors.white;
-    }
-
-    if (widget.disabled) {
-      return (
-        fontColor: realFontColor.withAlpha(128),
-        bgColor: realBgColor.withAlpha(128),
-        borderColor: border.withAlpha(128),
-      );
-    } else {
-      return (
-        fontColor: realFontColor,
-        bgColor: realBgColor,
-        borderColor: border,
-      );
-    }
+    Color fontColor = isNormal ? const Color(0xFF969799) : font;
+    Color bgColor =
+        isNormal && widget.nativeType == ButtonNativeType.normal
+            ? Colors.white
+            : bg;
+    int alpha = widget.disabled ? 128 : 255;
+    return (
+      fontColor: fontColor.withAlpha(alpha),
+      bgColor: bgColor.withAlpha(alpha),
+      borderColor: border.withAlpha(alpha),
+    );
   }
 
   ButtonColors getButtonColors() {
@@ -134,7 +123,6 @@ Widget _buttonWidgetHandler(
   ButtonStyles style, [
   ButtonIconStates? icon,
 ]) {
-
   switch (state.nativeType) {
     case ButtonNativeType.normal:
       return _normalButton(state, style, icon);
@@ -146,9 +134,7 @@ Widget _buttonWidgetHandler(
 }
 
 Widget? _getButtonChild(ButtonStates state, ButtonStyles style) {
-  if (state.slot != null) return state.slot!;
-  if (state.text != null) return Text(state.text!);
-  return null;
+  return state.slot ?? (state.text != null ? Text(state.text!) : null);
 }
 
 Widget? _getIcon(ButtonStyles style, [ButtonIconStates? icon]) {
@@ -167,7 +153,7 @@ Widget _normalButton(
     icon: _getIcon(style, icon),
     onPressed: state.click,
     onLongPress: state.longPress,
-    label: _getButtonChild(state, style) ?? Text(''),
+    label: _getButtonChild(state, style) ?? const Text(''),
   );
 }
 
@@ -208,6 +194,6 @@ Widget _plainButton(
     icon: _getIcon(style, icon),
     onPressed: state.click,
     onLongPress: state.longPress,
-    label: _getButtonChild(state, style) ?? Text(''),
+    label: _getButtonChild(state, style) ?? const Text(''),
   );
 }

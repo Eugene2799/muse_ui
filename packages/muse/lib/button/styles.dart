@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:muse_ui/button/types.dart';
 
+Color? _getPressedColor(Color color) {
+  return color.withAlpha(55);
+}
+
 ButtonStyle normalBtnStyle(
   ButtonStates state,
   ButtonStyles style, [
@@ -9,10 +13,9 @@ ButtonStyle normalBtnStyle(
   return ButtonStyle(
     iconAlignment: icon?.position,
     iconColor: WidgetStateProperty.resolveWith<Color?>((states) {
-      if (states.contains(WidgetState.pressed)) {
-        return style.colors.fontColor.withAlpha(55); // 按下时的颜色
-      }
-      return style.colors.fontColor; // 默认背景色
+      return states.contains(WidgetState.pressed)
+          ? _getPressedColor(style.colors.fontColor)
+          : style.colors.fontColor;
     }),
     padding: WidgetStateProperty.all(EdgeInsets.all(20)),
     shape: WidgetStateProperty.all<RoundedRectangleBorder>(
@@ -21,21 +24,19 @@ ButtonStyle normalBtnStyle(
         side: BorderSide(
           color: style.colors.borderColor,
           width: style.hairline ? 0.5 : 1.0,
-        ), // 设置边框颜色和宽度
+        ),
       ),
     ),
     textStyle: WidgetStateProperty.all(TextStyle(fontSize: style.size.size)),
     foregroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
-      if (states.contains(WidgetState.pressed)) {
-        return style.colors.fontColor.withAlpha(55); // 按下时的颜色
-      }
-      return style.colors.fontColor;
+      return states.contains(WidgetState.pressed)
+          ? _getPressedColor(style.colors.fontColor)
+          : style.colors.fontColor;
     }),
     backgroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
-      if (states.contains(WidgetState.pressed)) {
-        return style.colors.bgColor.withAlpha(55); // 按下时的颜色
-      }
-      return style.colors.bgColor;
+      return states.contains(WidgetState.pressed)
+          ? _getPressedColor(style.colors.bgColor)
+          : style.colors.bgColor;
     }),
   );
 }
@@ -48,10 +49,9 @@ ButtonStyle textBtnStyle(
   return ButtonStyle(
     iconAlignment: icon?.position,
     iconColor: WidgetStateProperty.resolveWith<Color?>((states) {
-      if (states.contains(WidgetState.pressed)) {
-        return style.colors.fontColor.withAlpha(55); // 按下时的颜色
-      }
-      return style.colors.fontColor; // 默认背景色
+      return states.contains(WidgetState.pressed)
+          ? _getPressedColor(style.colors.fontColor)
+          : style.colors.fontColor;
     }),
     overlayColor: WidgetStateProperty.all(Colors.transparent),
     padding: WidgetStateProperty.all(
@@ -59,10 +59,9 @@ ButtonStyle textBtnStyle(
     ),
     textStyle: WidgetStateProperty.all(TextStyle(fontSize: style.size.size)),
     foregroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
-      if (states.contains(WidgetState.pressed)) {
-        return style.colors.fontColor.withAlpha(55); // 按下时的颜色
-      }
-      return style.colors.fontColor;
+      return states.contains(WidgetState.pressed)
+          ? _getPressedColor(style.colors.fontColor)
+          : style.colors.fontColor;
     }),
   );
 }
@@ -75,10 +74,9 @@ ButtonStyle plainBtnStyle(
   return ButtonStyle(
     iconAlignment: icon?.position,
     iconColor: WidgetStateProperty.resolveWith<Color?>((states) {
-      if (states.contains(WidgetState.pressed)) {
-        return style.colors.fontColor.withAlpha(55); // 按下时的颜色
-      }
-      return style.colors.fontColor; // 默认背景色
+      return states.contains(WidgetState.pressed)
+          ? _getPressedColor(style.colors.fontColor)
+          : style.colors.fontColor;
     }),
     padding: WidgetStateProperty.all(EdgeInsets.all(20)),
     side: WidgetStateProperty.all<BorderSide>(
@@ -94,10 +92,9 @@ ButtonStyle plainBtnStyle(
     ),
     textStyle: WidgetStateProperty.all(TextStyle(fontSize: style.size.size)),
     foregroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
-      if (states.contains(WidgetState.pressed)) {
-        return style.colors.fontColor.withAlpha(55); // 按下时的颜色
-      }
-      return style.colors.fontColor;
+      return states.contains(WidgetState.pressed)
+          ? _getPressedColor(style.colors.fontColor)
+          : style.colors.fontColor;
     }),
   );
 }
