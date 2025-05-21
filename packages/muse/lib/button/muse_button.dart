@@ -190,23 +190,15 @@ Widget _normalButton(
   ButtonStyle bs = normalBtnStyle(style, icon);
   Widget btn = _createButton(
     style: style,
-    child:
-        icon == null
-            ? ElevatedButton(
-              style: bs,
-              onPressed: state.click,
-              onLongPress: state.longPress,
-              child: _getButtonChild(state, style),
-            )
-            : IconElevatedButton(
-              style: bs,
-              iconAlignment: icon.position,
-              gap: icon.gap,
-              icon: _getIcon(style, icon)!,
-              onPressed: state.click,
-              onLongPress: state.longPress,
-              label: _getButtonChild(state, style),
-            ),
+    child: IconElevatedButton(
+      style: bs,
+      iconAlignment: icon?.position,
+      gap: icon?.gap,
+      icon: _getIcon(style, icon),
+      onPressed: state.click,
+      onLongPress: state.longPress,
+      label: _getButtonChild(state, style),
+    ),
   );
 
   return btn;
@@ -220,23 +212,15 @@ Widget _textButton(
   ButtonStyle bs = textBtnStyle(style, icon);
   Widget btn = _createButton(
     style: style,
-    child:
-        icon == null
-            ? TextButton(
-              style: bs,
-              onPressed: state.click,
-              onLongPress: state.longPress,
-              child: _getButtonChild(state, style) ?? Text(''),
-            )
-            : IconTextButton(
-              style: bs,
-              iconAlignment: icon.position,
-              gap: icon.gap,
-              icon: _getIcon(style, icon)!,
-              onPressed: state.click,
-              onLongPress: state.longPress,
-              label: _getButtonChild(state, style),
-            ),
+    child: IconTextButton(
+      style: bs,
+      iconAlignment: icon?.position,
+      gap: icon?.gap,
+      icon: _getIcon(style, icon),
+      onPressed: state.click,
+      onLongPress: state.longPress,
+      label: _getButtonChild(state, style),
+    ),
   );
 
   return btn;
@@ -250,23 +234,15 @@ Widget _plainButton(
   ButtonStyle bs = plainBtnStyle(style, icon);
   Widget btn = _createButton(
     style: style,
-    child:
-        icon == null
-            ? OutlinedButton(
-              style: bs,
-              onPressed: state.click,
-              onLongPress: state.longPress,
-              child: _getButtonChild(state, style),
-            )
-            : IconOutlinedButton(
-              style: bs,
-              iconAlignment: icon.position,
-              gap: icon.gap,
-              icon: _getIcon(style, icon)!,
-              onPressed: state.click,
-              onLongPress: state.longPress,
-              label: _getButtonChild(state, style),
-            ),
+    child: IconOutlinedButton(
+      style: bs,
+      iconAlignment: icon?.position,
+      gap: icon?.gap,
+      icon: _getIcon(style, icon),
+      onPressed: state.click,
+      onLongPress: state.longPress,
+      label: _getButtonChild(state, style),
+    ),
   );
 
   return btn;

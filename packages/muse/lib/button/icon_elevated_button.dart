@@ -15,18 +15,21 @@ class IconElevatedButton extends ElevatedButton {
     double? gap,
     super.clipBehavior,
     super.statesController,
-    required Widget icon,
+    Widget? icon,
     Widget? label,
     IconAlignment? iconAlignment,
   }) : super(
          autofocus: autofocus ?? false,
-         child: _MuseElevatedButtonWithIconChild(
-           icon: icon,
-           label: label,
-           gap: gap ?? defaultGap,
-           buttonStyle: style,
-           iconAlignment: iconAlignment,
-         ),
+         child:
+             icon == null
+                 ? label
+                 : _MuseElevatedButtonWithIconChild(
+                   icon: icon,
+                   label: label,
+                   gap: gap ?? defaultGap,
+                   buttonStyle: style,
+                   iconAlignment: iconAlignment,
+                 ),
        );
 
   @override

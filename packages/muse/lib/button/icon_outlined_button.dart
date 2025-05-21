@@ -15,18 +15,21 @@ class IconOutlinedButton extends OutlinedButton {
     double? gap,
     super.clipBehavior,
     super.statesController,
-    required Widget icon,
+    Widget? icon,
     Widget? label,
     IconAlignment? iconAlignment,
   }) : super(
          autofocus: autofocus ?? false,
-         child: _MuseOutlinedButtonWithIconChild(
-           icon: icon,
-           label: label,
-           gap: gap ?? defaultGap,
-           buttonStyle: style,
-           iconAlignment: iconAlignment,
-         ),
+         child:
+             icon == null
+                 ? label
+                 : _MuseOutlinedButtonWithIconChild(
+                   icon: icon,
+                   label: label,
+                   gap: gap ?? defaultGap,
+                   buttonStyle: style,
+                   iconAlignment: iconAlignment,
+                 ),
        );
 
   @override
