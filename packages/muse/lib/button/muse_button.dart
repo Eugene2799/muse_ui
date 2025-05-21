@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:muse_ui/button/styles.dart';
 import 'package:muse_ui/button/types.dart';
 
+import 'icon_elevated_button.dart';
+import 'icon_outlined_button.dart';
 import 'icon_text_button.dart';
 
 class MuseButton extends StatefulWidget {
@@ -50,6 +52,9 @@ class MuseButton extends StatefulWidget {
 class _MuseButtonState extends State<MuseButton> {
   ButtonIconStates? iconStates;
 
+  static const int disabledAlpha = 128;
+  static const int enabledAlpha = 255;
+
   IconData? getIconData() {
     return widget.icon ?? widget.iconPrefix;
   }
@@ -61,7 +66,7 @@ class _MuseButtonState extends State<MuseButton> {
         isNormal && widget.nativeType == ButtonNativeType.normal
             ? Colors.white
             : bg;
-    int alpha = widget.disabled ? 128 : 255;
+    int alpha = widget.disabled ? disabledAlpha : enabledAlpha;
     return (
       fontColor: fontColor.withAlpha(alpha),
       bgColor: bgColor.withAlpha(alpha),
@@ -69,7 +74,7 @@ class _MuseButtonState extends State<MuseButton> {
     );
   }
 
-  ButtonColors getButtonColors() {
+  ButtonColors getColorHandler() {
     if (widget.colors != null) return widget.colors!;
     switch (widget.nativeType) {
       case ButtonNativeType.normal:
@@ -101,7 +106,7 @@ class _MuseButtonState extends State<MuseButton> {
 
     final ButtonStyles style = (
       size: widget.size,
-      colors: getButtonColors(),
+      colors: getColorHandler(),
       borderType: widget.borderType,
       hairline: widget.hairline,
     );
@@ -147,13 +152,22 @@ Widget _normalButton(
   ButtonIconStates? icon,
 ]) {
   ButtonStyle bs = normalBtnStyle(state, style, icon);
-
-  return ElevatedButton.icon(
+  if (icon == null) {
+    return ElevatedButton(
+      style: bs,
+      onPressed: state.click,
+      onLongPress: state.longPress,
+      child: _getButtonChild(state, style),
+    );
+  }
+  return IconElevatedButton(
     style: bs,
-    icon: _getIcon(style, icon),
+    iconAlignment: icon.position,
+    gap: icon.gap,
+    icon: _getIcon(style, icon)!,
     onPressed: state.click,
     onLongPress: state.longPress,
-    label: _getButtonChild(state, style) ?? const Text(''),
+    label: _getButtonChild(state, style),
   );
 }
 
@@ -168,7 +182,7 @@ Widget _textButton(
       style: bs,
       onPressed: state.click,
       onLongPress: state.longPress,
-      child: _getButtonChild(state, style)!,
+      child: _getButtonChild(state, style) ?? Text(''),
     );
   }
   return IconTextButton(
@@ -189,11 +203,21 @@ Widget _plainButton(
 ]) {
   ButtonStyle bs = plainBtnStyle(state, style, icon);
 
-  return OutlinedButton.icon(
+  if (icon == null) {
+    return OutlinedButton(
+      style: bs,
+      onPressed: state.click,
+      onLongPress: state.longPress,
+      child: _getButtonChild(state, style),
+    );
+  }
+  return IconOutlinedButton(
     style: bs,
-    icon: _getIcon(style, icon),
+    iconAlignment: icon.position,
+    gap: icon.gap,
+    icon: _getIcon(style, icon)!,
     onPressed: state.click,
     onLongPress: state.longPress,
-    label: _getButtonChild(state, style) ?? const Text(''),
+    label: _getButtonChild(state, style),
   );
 }

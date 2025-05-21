@@ -1,23 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:muse_ui/button/types.dart';
 
-Color? _getPressedColor(Color color) {
-  return color.withAlpha(55);
-}
+const double defaultGap = 4.0;
 
 ButtonStyle normalBtnStyle(
   ButtonStates state,
   ButtonStyles style, [
   ButtonIconStates? icon,
 ]) {
-  return ButtonStyle(
-    iconAlignment: icon?.position,
-    iconColor: WidgetStateProperty.resolveWith<Color?>((states) {
-      return states.contains(WidgetState.pressed)
-          ? _getPressedColor(style.colors.fontColor)
-          : style.colors.fontColor;
-    }),
-    padding: WidgetStateProperty.all(EdgeInsets.all(20)),
+  return _baseBtnStyle(style, icon: icon).copyWith(
     shape: WidgetStateProperty.all<RoundedRectangleBorder>(
       RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(style.borderType.radius),
@@ -27,17 +18,7 @@ ButtonStyle normalBtnStyle(
         ),
       ),
     ),
-    textStyle: WidgetStateProperty.all(TextStyle(fontSize: style.size.size)),
-    foregroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
-      return states.contains(WidgetState.pressed)
-          ? _getPressedColor(style.colors.fontColor)
-          : style.colors.fontColor;
-    }),
-    backgroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
-      return states.contains(WidgetState.pressed)
-          ? _getPressedColor(style.colors.bgColor)
-          : style.colors.bgColor;
-    }),
+    backgroundColor: _getColorProperty(style.colors.bgColor),
   );
 }
 
@@ -46,24 +27,10 @@ ButtonStyle textBtnStyle(
   ButtonStyles style, [
   ButtonIconStates? icon,
 ]) {
-  return ButtonStyle(
-    iconAlignment: icon?.position,
-    iconColor: WidgetStateProperty.resolveWith<Color?>((states) {
-      return states.contains(WidgetState.pressed)
-          ? _getPressedColor(style.colors.fontColor)
-          : style.colors.fontColor;
-    }),
-    overlayColor: WidgetStateProperty.all(Colors.transparent),
-    padding: WidgetStateProperty.all(
-      EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
-    ),
-    textStyle: WidgetStateProperty.all(TextStyle(fontSize: style.size.size)),
-    foregroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
-      return states.contains(WidgetState.pressed)
-          ? _getPressedColor(style.colors.fontColor)
-          : style.colors.fontColor;
-    }),
-  );
+  return _baseBtnStyle(
+    style,
+    icon: icon,
+  ).copyWith(overlayColor: WidgetStateProperty.all(Colors.transparent));
 }
 
 ButtonStyle plainBtnStyle(
@@ -71,14 +38,7 @@ ButtonStyle plainBtnStyle(
   ButtonStyles style, [
   ButtonIconStates? icon,
 ]) {
-  return ButtonStyle(
-    iconAlignment: icon?.position,
-    iconColor: WidgetStateProperty.resolveWith<Color?>((states) {
-      return states.contains(WidgetState.pressed)
-          ? _getPressedColor(style.colors.fontColor)
-          : style.colors.fontColor;
-    }),
-    padding: WidgetStateProperty.all(EdgeInsets.all(20)),
+  return _baseBtnStyle(style, icon: icon).copyWith(
     side: WidgetStateProperty.all<BorderSide>(
       BorderSide(
         color: style.colors.borderColor,
@@ -90,11 +50,27 @@ ButtonStyle plainBtnStyle(
         borderRadius: BorderRadius.circular(style.borderType.radius),
       ),
     ),
+  );
+}
+
+Color? _getPressedColor(Color color) {
+  return color.withAlpha(55);
+}
+
+WidgetStateProperty<Color?> _getColorProperty(Color color) {
+  return WidgetStateProperty.resolveWith<Color?>((states) {
+    return states.contains(WidgetState.pressed)
+        ? _getPressedColor(color)
+        : color;
+  });
+}
+
+ButtonStyle _baseBtnStyle(ButtonStyles style, {ButtonIconStates? icon}) {
+  return ButtonStyle(
+    iconAlignment: icon?.position,
+    iconColor: _getColorProperty(style.colors.fontColor),
+    padding: WidgetStateProperty.all(EdgeInsets.all(20)),
     textStyle: WidgetStateProperty.all(TextStyle(fontSize: style.size.size)),
-    foregroundColor: WidgetStateProperty.resolveWith<Color?>((states) {
-      return states.contains(WidgetState.pressed)
-          ? _getPressedColor(style.colors.fontColor)
-          : style.colors.fontColor;
-    }),
+    foregroundColor: _getColorProperty(style.colors.fontColor),
   );
 }

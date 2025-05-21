@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:muse_ui/button/styles.dart';
 import 'package:muse_ui/shared/utils.dart';
 
-class IconTextButton extends TextButton {
-  IconTextButton({
+class IconOutlinedButton extends OutlinedButton {
+  IconOutlinedButton({
     super.key,
     required super.onPressed,
     super.onLongPress,
@@ -20,7 +20,7 @@ class IconTextButton extends TextButton {
     IconAlignment? iconAlignment,
   }) : super(
          autofocus: autofocus ?? false,
-         child: _MuseTextButtonWithIconChild(
+         child: _MuseOutlinedButtonWithIconChild(
            icon: icon,
            label: label,
            gap: gap ?? defaultGap,
@@ -32,17 +32,18 @@ class IconTextButton extends TextButton {
   @override
   ButtonStyle defaultStyleOf(BuildContext context) {
     final bool useMaterial3 = Theme.of(context).useMaterial3;
+    if (!useMaterial3) {
+      return super.defaultStyleOf(context);
+    }
     final ButtonStyle buttonStyle = super.defaultStyleOf(context);
     final double defaultFontSize =
         buttonStyle.textStyle?.resolve(const <WidgetState>{})?.fontSize ?? 14.0;
     final double effectiveTextScale =
         MediaQuery.textScalerOf(context).scale(defaultFontSize) / 14.0;
     final EdgeInsetsGeometry scaledPadding = ButtonStyleButton.scaledPadding(
-      useMaterial3
-          ? const EdgeInsetsDirectional.fromSTEB(12, 8, 16, 8)
-          : const EdgeInsets.all(8),
-      const EdgeInsets.symmetric(horizontal: 4),
-      const EdgeInsets.symmetric(horizontal: 4),
+      const EdgeInsetsDirectional.fromSTEB(16, 0, 24, 0),
+      const EdgeInsetsDirectional.fromSTEB(8, 0, 12, 0),
+      const EdgeInsetsDirectional.fromSTEB(4, 0, 6, 0),
       effectiveTextScale,
     );
     return buttonStyle.copyWith(
@@ -51,8 +52,8 @@ class IconTextButton extends TextButton {
   }
 }
 
-class _MuseTextButtonWithIconChild extends StatelessWidget {
-  const _MuseTextButtonWithIconChild({
+class _MuseOutlinedButtonWithIconChild extends StatelessWidget {
+  const _MuseOutlinedButtonWithIconChild({
     required this.label,
     required this.icon,
     required this.buttonStyle,
@@ -68,10 +69,12 @@ class _MuseTextButtonWithIconChild extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final TextButtonThemeData textButtonTheme = TextButtonTheme.of(context);
+    final OutlinedButtonThemeData outlinedButtonTheme = OutlinedButtonTheme.of(
+      context,
+    );
     final IconAlignment effectiveIconAlignment =
         iconAlignment ??
-        textButtonTheme.style?.iconAlignment ??
+        outlinedButtonTheme.style?.iconAlignment ??
         buttonStyle?.iconAlignment ??
         IconAlignment.start;
     final Widget labelBox =
