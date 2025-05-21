@@ -3,11 +3,7 @@ import 'package:muse_ui/button/types.dart';
 
 const double defaultGap = 4.0;
 
-ButtonStyle normalBtnStyle(
-  ButtonStates state,
-  ButtonStyles style, [
-  ButtonIconStates? icon,
-]) {
+ButtonStyle normalBtnStyle(ButtonStyles style, [ButtonIconStates? icon]) {
   return _baseBtnStyle(style, icon: icon).copyWith(
     shape: WidgetStateProperty.all<RoundedRectangleBorder>(
       RoundedRectangleBorder(
@@ -22,22 +18,14 @@ ButtonStyle normalBtnStyle(
   );
 }
 
-ButtonStyle textBtnStyle(
-  ButtonStates state,
-  ButtonStyles style, [
-  ButtonIconStates? icon,
-]) {
+ButtonStyle textBtnStyle(ButtonStyles style, [ButtonIconStates? icon]) {
   return _baseBtnStyle(
     style,
     icon: icon,
   ).copyWith(overlayColor: WidgetStateProperty.all(Colors.transparent));
 }
 
-ButtonStyle plainBtnStyle(
-  ButtonStates state,
-  ButtonStyles style, [
-  ButtonIconStates? icon,
-]) {
+ButtonStyle plainBtnStyle(ButtonStyles style, [ButtonIconStates? icon]) {
   return _baseBtnStyle(style, icon: icon).copyWith(
     side: WidgetStateProperty.all<BorderSide>(
       BorderSide(
@@ -69,7 +57,7 @@ ButtonStyle _baseBtnStyle(ButtonStyles style, {ButtonIconStates? icon}) {
   return ButtonStyle(
     iconAlignment: icon?.position,
     iconColor: _getColorProperty(style.colors.fontColor),
-    padding: WidgetStateProperty.all(EdgeInsets.all(20)),
+    padding: WidgetStateProperty.all(style.size.padding),
     textStyle: WidgetStateProperty.all(TextStyle(fontSize: style.size.size)),
     foregroundColor: _getColorProperty(style.colors.fontColor),
   );

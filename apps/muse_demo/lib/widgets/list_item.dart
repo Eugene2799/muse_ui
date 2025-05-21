@@ -16,7 +16,12 @@ class ListItem extends StatelessWidget {
       children: [
         Text(title, style: subtitleStyle),
         SizedBox(height: 10),
-        Wrap(spacing: 8.0, runSpacing: 4.0, children: children),
+        Wrap(
+          spacing: 8.0,
+          runSpacing: 4.0,
+          crossAxisAlignment: WrapCrossAlignment.center,
+          children: children,
+        ),
         SizedBox(height: 10),
       ],
     );

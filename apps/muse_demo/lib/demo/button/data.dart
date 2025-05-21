@@ -19,14 +19,12 @@ List<DemoList> demoButton = [
     list: [
       MuseButton(
         text: "文本按钮",
-        size: ButtonSize.normal,
         nativeType: ButtonNativeType.text,
         type: ButtonType.primary,
         click: () => {},
       ),
       MuseButton(
         text: "文本按钮",
-        size: ButtonSize.normal,
         icon: Icons.add_circle,
         nativeType: ButtonNativeType.text,
         type: ButtonType.danger,
@@ -34,7 +32,6 @@ List<DemoList> demoButton = [
       ),
       MuseButton(
         text: "自定义颜色",
-        size: ButtonSize.small,
         nativeType: ButtonNativeType.text,
         colors: (
           fontColor: Colors.purple,
@@ -167,6 +164,43 @@ List<DemoList> demoButton = [
         type: ButtonType.primary,
         size: ButtonSize.mini,
         text: "迷你按钮",
+        click: () => {},
+      ),
+    ],
+  ),
+  (
+    title: "块级元素",
+    list: [
+      MuseButton(
+        type: ButtonType.primary,
+        width: double.infinity,
+        text: "块级元素",
+        click: () => {},
+      ),
+    ],
+  ),
+  (
+    title: "自定义颜色",
+    list: [
+      MuseButton(
+        type: ButtonType.primary,
+        colors: (
+          fontColor: Colors.white,
+          bgColor: Colors.deepPurpleAccent,
+          borderColor: Colors.deepPurpleAccent,
+        ),
+        text: "单色按钮",
+        click: () => {},
+      ),
+      MuseButton(
+        type: ButtonType.primary,
+        nativeType: ButtonNativeType.plain,
+        colors: (
+          fontColor: Colors.deepPurpleAccent,
+          bgColor: Colors.white,
+          borderColor: Colors.deepPurpleAccent,
+        ),
+        text: "单色按钮",
         click: () => {},
       ),
     ],

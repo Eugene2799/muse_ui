@@ -21,6 +21,8 @@ class MuseButton extends StatefulWidget {
     this.autofocus = false,
     this.iconPrefix,
     this.iconPosition = IconAlignment.start,
+    this.width,
+    this.height,
     this.iconGap,
     this.click,
     this.longPress,
@@ -39,6 +41,8 @@ class MuseButton extends StatefulWidget {
   final bool disabled;
   final bool autofocus;
   final IconAlignment iconPosition;
+  final double? width;
+  final double? height;
   final double? iconGap;
 
   final VoidCallback? click;
@@ -51,13 +55,14 @@ class MuseButton extends StatefulWidget {
 
 class _MuseButtonState extends State<MuseButton> {
   ButtonIconStates? iconStates;
+  ButtonColors? btnColors;
 
   static const int disabledAlpha = 128;
   static const int enabledAlpha = 255;
-
-  IconData? getIconData() {
-    return widget.icon ?? widget.iconPrefix;
-  }
+  late final IconData? iconData;
+  late final ButtonStates btnState;
+  late final ButtonStyles btnStyle;
+  late final Widget btnWidget;
 
   ButtonColors getColor(Color font, Color bg, Color border) {
     bool isNormal = widget.type == ButtonType.normal;
@@ -74,26 +79,72 @@ class _MuseButtonState extends State<MuseButton> {
     );
   }
 
-  ButtonColors getColorHandler() {
-    if (widget.colors != null) return widget.colors!;
-    switch (widget.nativeType) {
+  Widget _getButton(ButtonNativeType nativeType) {
+    if (widget.colors != null) {
+      btnColors = widget.colors!;
+    }
+    switch (nativeType) {
       case ButtonNativeType.normal:
-        return getColor(Colors.white, widget.type.color, widget.type.color);
+        btnColors ??= getColor(
+          Colors.white,
+          widget.type.color,
+          widget.type.color,
+        );
+        btnStyle = (
+          size: widget.size,
+          width: widget.width,
+          height: widget.height,
+          colors: btnColors!,
+          borderType: widget.borderType,
+          hairline: widget.hairline,
+        );
+        return _normalButton(btnState, btnStyle, iconStates);
       case ButtonNativeType.plain:
-        return getColor(widget.type.color, Colors.white, widget.type.color);
+        btnColors ??= getColor(
+          widget.type.color,
+          Colors.white,
+          widget.type.color,
+        );
+        btnStyle = (
+          size: widget.size,
+          width: widget.width,
+          height: widget.height,
+          colors: btnColors!,
+          borderType: widget.borderType,
+          hairline: widget.hairline,
+        );
+        return _plainButton(btnState, btnStyle, iconStates);
       case ButtonNativeType.text:
-        return getColor(
+        btnColors ??= getColor(
           widget.type.color,
           Color(0x00FFFFFF),
           Color(0x00FFFFFF),
         );
+        btnStyle = (
+          size: widget.size,
+          width: widget.width,
+          height: widget.height,
+          colors: btnColors!,
+          borderType: widget.borderType,
+          hairline: widget.hairline,
+        );
+        return _textButton(btnState, btnStyle, iconStates);
     }
   }
 
   @override
-  Widget build(BuildContext context) {
-    final IconData? iconData = getIconData();
-    final ButtonStates state = (
+  void initState() {
+    super.initState();
+    iconData = widget.icon ?? widget.iconPrefix;
+    if (iconData != null) {
+      iconStates = (
+        icon: iconData!,
+        position: widget.iconPosition,
+        gap: widget.iconGap,
+      );
+    }
+
+    btnState = (
       text: widget.text,
       type: widget.type,
       nativeType: widget.nativeType,
@@ -104,39 +155,16 @@ class _MuseButtonState extends State<MuseButton> {
       slot: widget.slot,
     );
 
-    final ButtonStyles style = (
-      size: widget.size,
-      colors: getColorHandler(),
-      borderType: widget.borderType,
-      hairline: widget.hairline,
-    );
+    btnWidget = _getButton(widget.nativeType);
+  }
 
-    if (iconData != null) {
-      iconStates = (
-        icon: iconData,
-        position: widget.iconPosition,
-        gap: widget.iconGap,
-      );
-    }
-
-    return _buttonWidgetHandler(state, style, iconStates);
+  @override
+  Widget build(BuildContext context) {
+    return btnWidget;
   }
 }
 
-Widget _buttonWidgetHandler(
-  ButtonStates state,
-  ButtonStyles style, [
-  ButtonIconStates? icon,
-]) {
-  switch (state.nativeType) {
-    case ButtonNativeType.normal:
-      return _normalButton(state, style, icon);
-    case ButtonNativeType.plain:
-      return _plainButton(state, style, icon);
-    case ButtonNativeType.text:
-      return _textButton(state, style, icon);
-  }
-}
+late ButtonStyle bs;
 
 Widget? _getButtonChild(ButtonStates state, ButtonStyles style) {
   return state.slot ?? (state.text != null ? Text(state.text!) : null);
@@ -146,29 +174,42 @@ Widget? _getIcon(ButtonStyles style, [ButtonIconStates? icon]) {
   return icon == null ? null : Icon(icon.icon);
 }
 
+Widget _createButton({required ButtonStyles style, required Widget child}) {
+  return SizedBox(
+    height: style.height ?? style.size.height,
+    width: style.width,
+    child: child,
+  );
+}
+
 Widget _normalButton(
   ButtonStates state,
   ButtonStyles style, [
   ButtonIconStates? icon,
 ]) {
-  ButtonStyle bs = normalBtnStyle(state, style, icon);
-  if (icon == null) {
-    return ElevatedButton(
-      style: bs,
-      onPressed: state.click,
-      onLongPress: state.longPress,
-      child: _getButtonChild(state, style),
-    );
-  }
-  return IconElevatedButton(
-    style: bs,
-    iconAlignment: icon.position,
-    gap: icon.gap,
-    icon: _getIcon(style, icon)!,
-    onPressed: state.click,
-    onLongPress: state.longPress,
-    label: _getButtonChild(state, style),
+  ButtonStyle bs = normalBtnStyle(style, icon);
+  Widget btn = _createButton(
+    style: style,
+    child:
+        icon == null
+            ? ElevatedButton(
+              style: bs,
+              onPressed: state.click,
+              onLongPress: state.longPress,
+              child: _getButtonChild(state, style),
+            )
+            : IconElevatedButton(
+              style: bs,
+              iconAlignment: icon.position,
+              gap: icon.gap,
+              icon: _getIcon(style, icon)!,
+              onPressed: state.click,
+              onLongPress: state.longPress,
+              label: _getButtonChild(state, style),
+            ),
   );
+
+  return btn;
 }
 
 Widget _textButton(
@@ -176,24 +217,29 @@ Widget _textButton(
   ButtonStyles style, [
   ButtonIconStates? icon,
 ]) {
-  ButtonStyle bs = textBtnStyle(state, style, icon);
-  if (icon == null) {
-    return TextButton(
-      style: bs,
-      onPressed: state.click,
-      onLongPress: state.longPress,
-      child: _getButtonChild(state, style) ?? Text(''),
-    );
-  }
-  return IconTextButton(
-    style: bs,
-    iconAlignment: icon.position,
-    gap: icon.gap,
-    icon: _getIcon(style, icon)!,
-    onPressed: state.click,
-    onLongPress: state.longPress,
-    label: _getButtonChild(state, style),
+  ButtonStyle bs = textBtnStyle(style, icon);
+  Widget btn = _createButton(
+    style: style,
+    child:
+        icon == null
+            ? TextButton(
+              style: bs,
+              onPressed: state.click,
+              onLongPress: state.longPress,
+              child: _getButtonChild(state, style) ?? Text(''),
+            )
+            : IconTextButton(
+              style: bs,
+              iconAlignment: icon.position,
+              gap: icon.gap,
+              icon: _getIcon(style, icon)!,
+              onPressed: state.click,
+              onLongPress: state.longPress,
+              label: _getButtonChild(state, style),
+            ),
   );
+
+  return btn;
 }
 
 Widget _plainButton(
@@ -201,23 +247,27 @@ Widget _plainButton(
   ButtonStyles style, [
   ButtonIconStates? icon,
 ]) {
-  ButtonStyle bs = plainBtnStyle(state, style, icon);
-
-  if (icon == null) {
-    return OutlinedButton(
-      style: bs,
-      onPressed: state.click,
-      onLongPress: state.longPress,
-      child: _getButtonChild(state, style),
-    );
-  }
-  return IconOutlinedButton(
-    style: bs,
-    iconAlignment: icon.position,
-    gap: icon.gap,
-    icon: _getIcon(style, icon)!,
-    onPressed: state.click,
-    onLongPress: state.longPress,
-    label: _getButtonChild(state, style),
+  ButtonStyle bs = plainBtnStyle(style, icon);
+  Widget btn = _createButton(
+    style: style,
+    child:
+        icon == null
+            ? OutlinedButton(
+              style: bs,
+              onPressed: state.click,
+              onLongPress: state.longPress,
+              child: _getButtonChild(state, style),
+            )
+            : IconOutlinedButton(
+              style: bs,
+              iconAlignment: icon.position,
+              gap: icon.gap,
+              icon: _getIcon(style, icon)!,
+              onPressed: state.click,
+              onLongPress: state.longPress,
+              label: _getButtonChild(state, style),
+            ),
   );
+
+  return btn;
 }

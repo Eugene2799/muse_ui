@@ -25,14 +25,16 @@ enum ButtonBorderType {
 enum ButtonNativeType { normal, plain, text }
 
 enum ButtonSize {
-  large(16.0),
-  normal(14.0),
-  small(12.0),
-  mini(10.0);
+  large(16.0, 50.0, EdgeInsets.symmetric(horizontal: 30)),
+  normal(14.0, 44.0, EdgeInsets.symmetric(horizontal: 15)),
+  small(12.0, 32.0, EdgeInsets.symmetric(horizontal: 8)),
+  mini(10.1, 24.0, EdgeInsets.symmetric(horizontal: 0));
 
   final double size;
+  final double height;
+  final EdgeInsetsGeometry padding;
 
-  const ButtonSize(this.size);
+  const ButtonSize(this.size, this.height, this.padding);
 }
 
 enum ButtonIconPosition { left, right }
@@ -54,6 +56,8 @@ typedef ButtonStates =
 typedef ButtonStyles =
     ({
       ButtonSize size,
+      double? width,
+      double? height,
       ButtonColors colors,
       ButtonBorderType borderType,
       bool hairline,
