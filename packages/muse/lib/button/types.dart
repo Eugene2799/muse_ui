@@ -37,31 +37,13 @@ enum ButtonSize {
   const ButtonSize(this.size, this.height, this.padding);
 }
 
-enum ButtonIconPosition { left, right }
-
 typedef ButtonColors = ({Color fontColor, Color bgColor, Color borderColor});
-
-typedef ButtonStates =
-    ({
-      String? text,
-      ButtonType type,
-      ButtonNativeType nativeType,
-      bool disabled,
-      bool autofocus,
-      VoidCallback? click,
-      VoidCallback? longPress,
-      Widget? slot,
-    });
 
 typedef ButtonStyles =
     ({
       ButtonSize size,
-      double? width,
-      double? height,
       ButtonColors colors,
       ButtonBorderType borderType,
       bool hairline,
+      IconAlignment iconPosition,
     });
-
-typedef ButtonIconStates =
-    ({IconData icon, IconAlignment position, double? gap});

@@ -133,7 +133,6 @@ List<DemoList> demoButton = [
         icon: Icons.people_alt_outlined,
         text: "按钮",
         type: ButtonType.info,
-        iconGap: 0,
         nativeType: ButtonNativeType.plain,
         click: () => {},
       ),

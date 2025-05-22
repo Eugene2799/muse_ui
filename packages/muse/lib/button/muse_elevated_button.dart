@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:muse_ui/button/styles.dart';
 import 'package:muse_ui/shared/utils.dart';
 
-class IconElevatedButton extends ElevatedButton {
-  IconElevatedButton({
+class MuseElevatedButton extends ElevatedButton {
+  MuseElevatedButton({
     super.key,
     required super.onPressed,
     super.onLongPress,
@@ -15,16 +15,16 @@ class IconElevatedButton extends ElevatedButton {
     double? gap,
     super.clipBehavior,
     super.statesController,
-    Widget? icon,
+    IconData? iconData,
     Widget? label,
     IconAlignment? iconAlignment,
   }) : super(
          autofocus: autofocus ?? false,
          child:
-             icon == null
+             iconData == null
                  ? label
                  : _MuseElevatedButtonWithIconChild(
-                   icon: icon,
+                   icon: Icon(iconData),
                    label: label,
                    gap: gap ?? defaultGap,
                    buttonStyle: style,
