@@ -3,7 +3,6 @@ description: "UI elements for Flutter."
 version: 0.0.1
 homepage: https://github.com/Eugene2799/muse_ui
 repository: https://github.com/Eugene2799/muse_ui/tree/release/0.0.1/packages/muse
-publish_to: https://pub.dev
 
 environment:
   sdk: ^3.7.2
