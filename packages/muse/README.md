@@ -1,39 +1,33 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# muse_ui
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/tools/pub/writing-package-pages).
+> UI elements for **Flutter**
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/to/develop-packages).
--->
+The current repository is created out of personal interest and my experience in front-end development, as a Flutter-based UI library project. 
 
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+The goal of this project is to build a **practical**, **convenient**, and **simple** Flutter UI component library. 
 
-## Features
+This aims to facilitate daily complex business development by focusing on business functionality and custom component development.
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+* [Pub.dev Page](https://pub.dev/packages/muse_ui)
+* [Github Page](https://github.com/eugene2799/muse_ui)
+* [Demo Page](https://eugene2799.github.io/muse_ui/)
+* [Demo code Page](https://github.com/eugene2799/muse_ui/tree/master/apps/muse_demo)
+
+### UI Widgets
+- [MuseButton Demos](https://github.com/eugene2799/muse_ui/tree/master/apps/muse_demo/lib/demos/button)
+![MuseButton](http://oss.musetools.uk/pic/musebutton.png)
+
 
 ## Getting started
-
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
-
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
-
+### Install muse_ui
+```bash
+$ flutter pub add muse_ui
+```
+### Import it
 ```dart
-const like = 'sample';
+import 'package:muse_ui/button/muse_button.dart';
+import 'package:muse_ui/button/types.dart';
 ```
 
-## Additional information
-
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+## License
+MIT

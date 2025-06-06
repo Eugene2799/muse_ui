@@ -1,14 +1,10 @@
 # Muse UI
 
-English | [简体中文](./README.zh-CN.md)
+> 基于**Flutter**的UI组件库
 
-> UI elements for **Flutter**
-
-The current repository is created out of personal interest and my experience in front-end development, as a Flutter-based UI library project. 
-
-The goal of this project is to build a **practical**, **convenient**, and **simple** Flutter UI component library. 
-
-This aims to facilitate daily complex business development by focusing on business functionality and custom component development.
+这个项目是处于个人喜好和对前端的开发经验，创建了这个基于flutter的UI库项目。
+项目目的是构建一套**实用**、**便捷**、**简单**的flutter UI组件库。
+便于在日常繁杂的业务开发中，专注于业务功能和个性组件的开发。
 
 * [Pub.dev Page](https://pub.dev/packages/muse_ui)
 * [Github Page](https://github.com/eugene2799/muse_ui)
@@ -40,8 +36,8 @@ $ flutter run
 ```
 
 ### local development
-> change the code in apps/muse_demo/pubspec.yaml muse_ui to local path.
-> By default, melos will automatically be assigned to the local path and no modification is needed.
+> 修改 apps/muse_demo/pubspec.yaml 中的muse_ui插件为本地路径
+> 默认情况下，melos会自动指定为本地路径，无需修改
 
 
 ## Directory Structure
