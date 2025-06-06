@@ -10,8 +10,9 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
+  # muse_ui: ^0.0.1+1 # For remote development
   muse_ui:
-    path: ../../packages/muse
+    path: ../../packages/muse # For local development
 
 dev_dependencies:
   flutter_test:

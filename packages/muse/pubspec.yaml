@@ -1,8 +1,8 @@
 name: muse_ui
 description: "UI elements for Flutter."
-version: 0.0.1
+version: 0.0.1+1
 homepage: https://github.com/Eugene2799/muse_ui
-repository: https://github.com/Eugene2799/muse_ui/tree/release/0.0.1/packages/muse
+repository: https://github.com/eugene2799/muse_ui/tree/master/packages/muse
 
 environment:
   sdk: ^3.7.2
