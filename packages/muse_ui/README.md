@@ -1,6 +1,4 @@
-# Muse UI
-
-English | [简体中文](./README.zh-CN.md)
+# muse_ui
 
 > UI elements for **Flutter**
 
@@ -29,28 +27,6 @@ $ flutter pub add muse_ui
 ```dart
 import 'package:muse_ui/button/muse_button.dart';
 import 'package:muse_ui/button/types.dart';
-```
-
-## How to Use
-### run demo project
-```bash
-$ cd apps/muse_demo
-$ flutter pub get
-$ flutter run
-```
-
-### local development
-> change the code in apps/muse_demo/pubspec.yaml muse_ui to local path.
-> By default, melos will automatically be assigned to the local path and no modification is needed.
-
-
-## Directory Structure
-```bash
-├── apps                # Examples related to Muse UI
-│   └── muse_demo       Building applications using muse_ui
-│
-└── packages/muse       # muse_ui source code
-    └── lib             muse_ui source code root
 ```
 
 ## License

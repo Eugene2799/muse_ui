@@ -1,0 +1,19 @@
+name: muse_ui_workspace
+
+repository:
+  type: github
+  origin: https://github.com
+  owner: Eugene2799
+  name: muse_ui
+
+packages:
+  - "apps/**"
+  - "packages/**"
+
+command:
+  version:
+    workspaceChangelog: false
+
+scripts:
+  analyze:
+    exec: dart analyze .
