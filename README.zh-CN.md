@@ -1,5 +1,7 @@
 # Muse UI
 
+简体中文 | [English](./README.md)
+
 > 基于**Flutter**的UI组件库
 
 这个项目是处于个人喜好和对前端的开发经验，创建了这个基于flutter的UI库项目。
