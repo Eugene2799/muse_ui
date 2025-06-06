@@ -1,4 +1,4 @@
 # melos_managed_dependency_overrides: muse_ui
 dependency_overrides:
   muse_ui:
-    path: ../../packages/muse
+    path: ../../packages/muse_ui
