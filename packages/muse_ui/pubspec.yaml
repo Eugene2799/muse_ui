@@ -1,6 +1,6 @@
 name: muse_ui
 description: "UI elements for Flutter."
-version: 0.0.1+1
+version: 0.0.1+2
 homepage: https://github.com/musetools/muse_ui
 repository: https://github.com/musetools/muse_ui/tree/master/packages/muse_ui
 
