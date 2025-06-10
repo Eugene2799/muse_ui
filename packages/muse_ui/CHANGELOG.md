@@ -1,3 +1,19 @@
+## 0.0.1+2
+
+- Bump "muse_ui" to `0.0.1+2`.
+
+_2025-06-10_
+
+#### Optimization
+
+- Button
+  - Add ButtonBorderType circle.
+  - Add MuseButton widget param padding, fontSize and iconSize.
+  - Add iconColor in type ButtonColors.
+  
+- Docs
+  - Update readme and github url.
+
 ## 0.0.1+1
 
 - Bump "muse_ui" to `0.0.1+1`.
