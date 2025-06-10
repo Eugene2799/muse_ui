@@ -21,8 +21,11 @@ class MuseButton extends StatefulWidget {
     this.autofocus = false,
     this.iconPrefix,
     this.iconPosition = IconAlignment.start,
+    this.padding,
     this.width,
     this.height,
+    this.fontSize,
+    this.iconSize,
     this.iconGap,
     this.click,
     this.longPress,
@@ -41,8 +44,11 @@ class MuseButton extends StatefulWidget {
   final bool disabled;
   final bool autofocus;
   final IconAlignment iconPosition;
+  final EdgeInsetsGeometry? padding;
   final double? width;
   final double? height;
+  final double? fontSize;
+  final double? iconSize;
   final double? iconGap;
 
   final VoidCallback? click;
@@ -54,12 +60,9 @@ class MuseButton extends StatefulWidget {
 }
 
 class _MuseButtonState extends State<MuseButton> {
-  ButtonColors? btnColors;
-
   static const int disabledAlpha = 128;
   static const int enabledAlpha = 255;
   late final IconData? iconData;
-  late final ButtonStyles btnStyle;
   late final Widget btnWidget;
 
   @override
@@ -84,23 +87,28 @@ class _MuseButtonState extends State<MuseButton> {
       fontColor: fontColor.withAlpha(alpha),
       bgColor: bgColor.withAlpha(alpha),
       borderColor: colors.borderColor.withAlpha(alpha),
+      iconColor: fontColor.withAlpha(alpha),
     );
   }
 
   Widget _getButton(ButtonNativeType nativeType) {
-    if (widget.colors != null) {
-      btnColors = widget.colors!;
-    }
+    final EdgeInsetsGeometry padding = widget.padding ?? widget.size.padding;
+    final double fontSize = widget.fontSize ?? widget.size.size;
+    final double iconSize = widget.iconSize ?? fontSize;
+    ButtonColors? btnColors = widget.colors;
     switch (nativeType) {
       case ButtonNativeType.normal:
         btnColors ??= _getColor((
           fontColor: Colors.white,
           bgColor: widget.type.color,
           borderColor: widget.type.color,
+          iconColor: null,
         ));
         ButtonStyle bs = normalBtnStyle((
-          size: widget.size,
-          colors: btnColors!,
+          fontSize: fontSize,
+          iconSize: iconSize,
+          padding: padding,
+          colors: btnColors,
           borderType: widget.borderType,
           hairline: widget.hairline,
           iconPosition: widget.iconPosition,
@@ -111,10 +119,13 @@ class _MuseButtonState extends State<MuseButton> {
           fontColor: widget.type.color,
           bgColor: Colors.white,
           borderColor: widget.type.color,
+          iconColor: null,
         ));
         ButtonStyle bs = plainBtnStyle((
-          size: widget.size,
-          colors: btnColors!,
+          fontSize: fontSize,
+          iconSize: iconSize,
+          padding: padding,
+          colors: btnColors,
           borderType: widget.borderType,
           hairline: widget.hairline,
           iconPosition: widget.iconPosition,
@@ -125,10 +136,13 @@ class _MuseButtonState extends State<MuseButton> {
           fontColor: widget.type.color,
           bgColor: Color(0x00FFFFFF),
           borderColor: Color(0x00FFFFFF),
+          iconColor: null,
         ));
         ButtonStyle bs = textBtnStyle((
-          size: widget.size,
-          colors: btnColors!,
+          fontSize: fontSize,
+          iconSize: iconSize,
+          padding: padding,
+          colors: btnColors,
           borderType: widget.borderType,
           hairline: widget.hairline,
           iconPosition: widget.iconPosition,
@@ -142,11 +156,10 @@ class _MuseButtonState extends State<MuseButton> {
   }
 
   Widget _createButton(Widget child) {
-    return SizedBox(
-      height: widget.height ?? widget.size.height,
-      width: widget.width,
-      child: child,
-    );
+    double boxHeight = widget.height ?? widget.size.height;
+    double? boxWidth = widget.width;
+    if (widget.borderType == ButtonBorderType.circle) boxWidth = boxHeight;
+    return SizedBox(height: boxHeight, width: boxWidth, child: child);
   }
 
   Widget _normalButton(ButtonStyle style) {

@@ -1,7 +1,7 @@
 name: muse_demo
 description: "A Demo project for Muse UI."
 publish_to: "none"
-version: 1.0.0
+version: 1.0.1
 
 environment:
   sdk: ^3.7.2
@@ -10,7 +10,7 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
-  # muse_ui: ^0.0.1+1 # For remote development
+  # muse_ui: ^0.0.1 # For remote development
   muse_ui:
     path: ../../packages/muse_ui # For local development
 

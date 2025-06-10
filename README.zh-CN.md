@@ -8,15 +8,16 @@
 项目目的是构建一套**实用**、**便捷**、**简单**的 flutter UI 组件库。
 便于在日常繁杂的业务开发中，专注于业务功能和个性组件的开发。
 
-- [Pub.dev Page](https://pub.dev/packages/muse_ui)
-- [Github Page](https://github.com/eugene2799/muse_ui)
-- [Demo Page](https://eugene2799.github.io/muse_ui/)
-- [Demo code Page](https://github.com/eugene2799/muse_ui/tree/master/apps/muse_demo)
+- [Pub.dev](https://pub.dev/packages/muse_ui)
+- [Github](https://github.com/musetools/muse_ui)
+- [Demo](https://musetools.github.io/muse_ui/)
+- [Demo code](https://github.com/musetools/muse_ui/tree/master/apps/muse_demo)
 
 ### UI Widgets
 
-- [MuseButton Demos](https://github.com/eugene2799/muse_ui/tree/master/apps/muse_demo/lib/demos/button)
-  ![MuseButton](http://oss.musetools.uk/pic/musebutton.png)
+- [MuseButton Demos](https://github.com/musetools/muse_ui/tree/master/apps/muse_demo/lib/demos/button)
+![MuseButton](http://oss.musetools.uk/pic/button1.png)
+![MuseButton](http://oss.musetools.uk/pic/button2.png)
 
 ## Getting started
 
