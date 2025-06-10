@@ -15,6 +15,7 @@ enum ButtonType {
 enum ButtonBorderType {
   normal(2.0),
   round(999.0),
+  circle(999.0),
   square(0.0);
 
   final double radius;
@@ -37,11 +38,14 @@ enum ButtonSize {
   const ButtonSize(this.size, this.height, this.padding);
 }
 
-typedef ButtonColors = ({Color fontColor, Color bgColor, Color borderColor});
+typedef ButtonColors =
+    ({Color fontColor, Color bgColor, Color borderColor, Color? iconColor});
 
-typedef ButtonStyles =
+typedef MuseButtonStyles =
     ({
-      ButtonSize size,
+      double fontSize,
+      double iconSize,
+      EdgeInsetsGeometry padding,
       ButtonColors colors,
       ButtonBorderType borderType,
       bool hairline,
