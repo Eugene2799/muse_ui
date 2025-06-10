@@ -8,14 +8,15 @@ The goal of this project is to build a **practical**, **convenient**, and **simp
 
 This aims to facilitate daily complex business development by focusing on business functionality and custom component development.
 
-* [Pub.dev Page](https://pub.dev/packages/muse_ui)
-* [Github Page](https://github.com/eugene2799/muse_ui)
-* [Demo Page](https://eugene2799.github.io/muse_ui/)
-* [Demo code Page](https://github.com/eugene2799/muse_ui/tree/master/apps/muse_demo)
+* [Pub.dev](https://pub.dev/packages/muse_ui)
+* [Github](https://github.com/musetools/muse_ui)
+* [Demo](https://musetools.github.io/muse_ui/)
+* [Demo code](https://github.com/musetools/muse_ui/tree/master/apps/muse_demo)
 
 ### UI Widgets
-- [MuseButton Demos](https://github.com/eugene2799/muse_ui/tree/master/apps/muse_demo/lib/demos/button)
-![MuseButton](http://oss.musetools.uk/pic/musebutton.png)
+- [MuseButton Demos](https://github.com/musetools/muse_ui/tree/master/apps/muse_demo/lib/demos/button)
+![MuseButton](http://oss.musetools.uk/pic/button1.png)
+![MuseButton](http://oss.musetools.uk/pic/button2.png)
 
 
 ## Getting started
