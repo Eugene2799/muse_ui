@@ -15,7 +15,7 @@
 
 ### UI Widgets
 
-- [MuseButton Demos](https://github.com/musetools/muse_ui/tree/master/apps/muse_demo/lib/demos/button)
+- [MuseButton Demos](https://github.com/musetools/muse_ui/tree/main/apps/muse_demo/lib/demo/button)
 ![MuseButton](http://oss.musetools.uk/pic/button1.png)
 ![MuseButton](http://oss.musetools.uk/pic/button2.png)
 
