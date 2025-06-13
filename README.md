@@ -18,8 +18,8 @@ This aims to facilitate daily complex business development by focusing on busine
 ### UI Widgets
 
 - [MuseButton Demos](https://github.com/musetools/muse_ui/tree/main/apps/muse_demo/lib/demo/button)
-![MuseButton](http://oss.musetools.uk/pic/button1.png)
-![MuseButton](http://oss.musetools.uk/pic/button2.png)
+  ![MuseButton](http://oss.musetools.uk/pic/button1.png)
+  ![MuseButton](http://oss.musetools.uk/pic/button2.png)
 
 ## Getting started
 
@@ -36,6 +36,17 @@ import 'package:muse_ui/button/muse_button.dart';
 import 'package:muse_ui/button/types.dart';
 ```
 
+### Use
+
+```dart
+MuseButton(
+  text: "Square",
+  type: ButtonType.primary,
+  borderType: ButtonBorderType.square,
+  click: () => {},
+)
+```
+
 ## How to Use
 
 ### run demo project
@@ -48,8 +59,8 @@ $ flutter run
 
 ### local development
 
-> change the code in apps/muse_demo/pubspec.yaml muse_ui to local path.
-> By default, melos will automatically be assigned to the local path and no modification is needed.
+> Modify the muse_ui plugin in apps/muse_demo/pubspec.yaml to use a local path.
+> By default, melos is automatically set to the local path and does not need to be modified.
 
 ## Directory Structure
 
