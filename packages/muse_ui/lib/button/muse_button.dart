@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:muse_ui/shared/default.dart';
 
 import 'muse_elevated_button.dart';
 import 'muse_outlined_button.dart';
@@ -58,8 +59,6 @@ class MuseButton extends StatefulWidget {
 }
 
 class _MuseButtonState extends State<MuseButton> {
-  static const int disabledAlpha = 128;
-  static const int enabledAlpha = 255;
   late final Widget btnWidget;
 
   @override
@@ -73,12 +72,12 @@ class _MuseButtonState extends State<MuseButton> {
 
   ButtonColors _getColor(ButtonColors colors) {
     bool isNormal = widget.type == ButtonType.normal;
-    Color fontColor = isNormal ? const Color(0xFF969799) : colors.fontColor;
+    Color fontColor = isNormal ? Default.colorFont : colors.fontColor;
     Color bgColor =
         isNormal && widget.nativeType == ButtonNativeType.normal
             ? Colors.white
             : colors.bgColor;
-    int alpha = widget.disabled ? disabledAlpha : enabledAlpha;
+    int alpha = widget.disabled ? Default.alphaDisable : Default.alphaEnable;
     return (
       fontColor: fontColor.withAlpha(alpha),
       bgColor: bgColor.withAlpha(alpha),

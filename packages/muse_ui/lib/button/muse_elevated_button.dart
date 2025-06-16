@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:muse_ui/button/styles.dart';
+import 'package:muse_ui/shared/default.dart';
 import 'package:muse_ui/shared/utils.dart';
 
 class MuseElevatedButton extends ElevatedButton {
@@ -26,7 +26,7 @@ class MuseElevatedButton extends ElevatedButton {
                  : _MuseElevatedButtonWithIconChild(
                    icon: Icon(iconData),
                    label: label,
-                   gap: gap ?? defaultGap,
+                   gap: gap ?? Default.gap,
                    buttonStyle: style,
                    iconAlignment: iconAlignment,
                  ),
@@ -36,10 +36,11 @@ class MuseElevatedButton extends ElevatedButton {
   ButtonStyle defaultStyleOf(BuildContext context) {
     final bool useMaterial3 = Theme.of(context).useMaterial3;
     final ButtonStyle buttonStyle = super.defaultStyleOf(context);
-    final double defaultFontSize =
-        buttonStyle.textStyle?.resolve(const <WidgetState>{})?.fontSize ?? 14.0;
+    final double fontSize =
+        buttonStyle.textStyle?.resolve(const <WidgetState>{})?.fontSize ??
+        Default.fontSize;
     final double effectiveTextScale =
-        MediaQuery.textScalerOf(context).scale(defaultFontSize) / 14.0;
+        MediaQuery.textScalerOf(context).scale(fontSize) / Default.fontSize;
 
     final EdgeInsetsGeometry scaledPadding =
         useMaterial3
