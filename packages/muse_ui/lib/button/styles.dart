@@ -1,18 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:muse_ui/button/types.dart';
+import 'package:muse_ui/shared/utils.dart';
 
 const double defaultGap = 4.0;
 
 ButtonStyle _baseBtnStyle(MuseButtonStyles style) {
   return ButtonStyle(
     iconAlignment: style.iconPosition,
-    iconColor: _getColorProperty(
+    iconColor: Utils.getColorPressed(
       style.colors.iconColor ?? style.colors.fontColor,
     ),
     iconSize: WidgetStateProperty.all(style.iconSize),
     padding: WidgetStateProperty.all(style.padding),
     textStyle: WidgetStateProperty.all(TextStyle(fontSize: style.fontSize)),
-    foregroundColor: _getColorProperty(style.colors.fontColor),
+    foregroundColor: Utils.getColorPressed(style.colors.fontColor),
   );
 }
 
@@ -27,7 +28,7 @@ ButtonStyle normalBtnStyle(MuseButtonStyles style) {
         ),
       ),
     ),
-    backgroundColor: _getColorProperty(style.colors.bgColor),
+    backgroundColor: Utils.getColorPressed(style.colors.bgColor),
   );
 }
 
@@ -51,16 +52,4 @@ ButtonStyle plainBtnStyle(MuseButtonStyles style) {
       ),
     ),
   );
-}
-
-Color? _getPressedColor(Color color) {
-  return color.withAlpha(55);
-}
-
-WidgetStateProperty<Color?> _getColorProperty(Color color) {
-  return WidgetStateProperty.resolveWith<Color?>((states) {
-    return states.contains(WidgetState.pressed)
-        ? _getPressedColor(color)
-        : color;
-  });
 }
