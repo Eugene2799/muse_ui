@@ -6,4 +6,12 @@ class Utils {
         ? <Widget>[left, right]
         : <Widget>[left, SizedBox(width: gap), right];
   }
+
+  static WidgetStateProperty<Color?> getColorPressed(Color color) {
+    return WidgetStateProperty.resolveWith<Color?>((states) {
+      return states.contains(WidgetState.pressed)
+          ? color.withAlpha(55)
+          : color;
+    });
+  }
 }
