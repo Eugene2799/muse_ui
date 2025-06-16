@@ -19,7 +19,6 @@ class MuseButton extends StatefulWidget {
     this.hairline = false,
     this.disabled = false,
     this.autofocus = false,
-    this.iconPrefix,
     this.iconPosition = IconAlignment.start,
     this.padding,
     this.width,
@@ -34,7 +33,6 @@ class MuseButton extends StatefulWidget {
 
   final String? text;
   final IconData? icon;
-  final IconData? iconPrefix;
   final ButtonType type;
   final ButtonSize size;
   final ButtonNativeType nativeType;
@@ -62,13 +60,11 @@ class MuseButton extends StatefulWidget {
 class _MuseButtonState extends State<MuseButton> {
   static const int disabledAlpha = 128;
   static const int enabledAlpha = 255;
-  late final IconData? iconData;
   late final Widget btnWidget;
 
   @override
   void initState() {
     super.initState();
-    iconData = widget.icon ?? widget.iconPrefix;
     btnWidget = _getButton(widget.nativeType);
   }
 
@@ -168,7 +164,7 @@ class _MuseButtonState extends State<MuseButton> {
         style: style,
         iconAlignment: widget.iconPosition,
         gap: widget.iconGap,
-        iconData: iconData,
+        iconData: widget.icon,
         onPressed: widget.disabled ? null : widget.click,
         onLongPress: widget.disabled ? null : widget.longPress,
         label: _getButtonChild(),
@@ -182,7 +178,7 @@ class _MuseButtonState extends State<MuseButton> {
         style: style,
         iconAlignment: widget.iconPosition,
         gap: widget.iconGap,
-        iconData: iconData,
+        iconData: widget.icon,
         onPressed: widget.disabled ? null : widget.click,
         onLongPress: widget.disabled ? null : widget.longPress,
         label: _getButtonChild(),
@@ -196,7 +192,7 @@ class _MuseButtonState extends State<MuseButton> {
         style: style,
         iconAlignment: widget.iconPosition,
         gap: widget.iconGap,
-        iconData: iconData,
+        iconData: widget.icon,
         onPressed: widget.disabled ? null : widget.click,
         onLongPress: widget.disabled ? null : widget.longPress,
         label: _getButtonChild(),
