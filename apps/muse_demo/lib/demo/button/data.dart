@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:muse_demo/types.dart';
+import 'package:muse_icons/muse_icons.dart';
 import 'package:muse_ui/button/muse_button.dart';
 import 'package:muse_ui/button/types.dart';
 
@@ -58,6 +59,15 @@ List<DemoList> demoButton = [
         icon: Icons.add_circle,
         nativeType: ButtonNativeType.plain,
         type: ButtonType.info,
+        click: () => {},
+      ),
+      MuseButton(
+        size: ButtonSize.normal,
+        iconPrefix: MuseIcons.bicycle,
+        iconGap: 0,
+        iconSize: 40,
+        nativeType: ButtonNativeType.plain,
+        type: ButtonType.warning,
         click: () => {},
       ),
     ],
