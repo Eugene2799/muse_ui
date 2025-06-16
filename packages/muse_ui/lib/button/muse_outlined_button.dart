@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:muse_ui/button/styles.dart';
+import 'package:muse_ui/shared/default.dart';
 import 'package:muse_ui/shared/utils.dart';
 
 class MuseOutlinedButton extends OutlinedButton {
@@ -26,7 +26,7 @@ class MuseOutlinedButton extends OutlinedButton {
                  : _MuseOutlinedButtonWithIconChild(
                    icon: Icon(iconData),
                    label: label,
-                   gap: gap ?? defaultGap,
+                   gap: gap ?? Default.gap,
                    buttonStyle: style,
                    iconAlignment: iconAlignment,
                  ),
@@ -39,10 +39,11 @@ class MuseOutlinedButton extends OutlinedButton {
       return super.defaultStyleOf(context);
     }
     final ButtonStyle buttonStyle = super.defaultStyleOf(context);
-    final double defaultFontSize =
-        buttonStyle.textStyle?.resolve(const <WidgetState>{})?.fontSize ?? 14.0;
+    final double fontSize =
+        buttonStyle.textStyle?.resolve(const <WidgetState>{})?.fontSize ??
+        Default.fontSize;
     final double effectiveTextScale =
-        MediaQuery.textScalerOf(context).scale(defaultFontSize) / 14.0;
+        MediaQuery.textScalerOf(context).scale(fontSize) / Default.fontSize;
     final EdgeInsetsGeometry scaledPadding = ButtonStyleButton.scaledPadding(
       const EdgeInsetsDirectional.fromSTEB(16, 0, 24, 0),
       const EdgeInsetsDirectional.fromSTEB(8, 0, 12, 0),

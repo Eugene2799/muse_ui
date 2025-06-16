@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:muse_ui/button/types.dart';
 import 'package:muse_ui/shared/utils.dart';
 
-const double defaultGap = 4.0;
-
 ButtonStyle _baseBtnStyle(MuseButtonStyles style) {
   return ButtonStyle(
     iconAlignment: style.iconPosition,

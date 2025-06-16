@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'default.dart';
 
 class Utils {
   static List<Widget> getLRList(Widget left, double gap, Widget right) {
@@ -10,7 +11,7 @@ class Utils {
   static WidgetStateProperty<Color?> getColorPressed(Color color) {
     return WidgetStateProperty.resolveWith<Color?>((states) {
       return states.contains(WidgetState.pressed)
-          ? color.withAlpha(55)
+          ? color.withAlpha(Default.alphaPressed)
           : color;
     });
   }
