@@ -57,6 +57,7 @@ class MuseElevatedButton extends ElevatedButton {
               effectiveTextScale,
             );
     return buttonStyle.copyWith(
+      shadowColor: WidgetStatePropertyAll<Color>(Color(0x00FFFFFF)),
       padding: WidgetStatePropertyAll<EdgeInsetsGeometry>(scaledPadding),
     );
   }

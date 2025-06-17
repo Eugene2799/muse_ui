@@ -319,6 +319,40 @@ List<DemoList> demoButton = [
         iconSize: 22,
         click: () => {},
       ),
+      MuseButton(
+        text: "渐变色按钮",
+        // nativeType: ButtonNativeType.plain,
+        colors: (
+          fontColor: Colors.white,
+          bgColor: Color(0x00FFFFFF),
+          borderColor: Color(0x00FFFFFF),
+          iconColor: null,
+        ),
+        gradient: LinearGradient(colors: [Colors.red, Colors.orange.shade700]),
+        click: () => {},
+      ),
+      MuseButton(
+        icon: MuseIcons.random,
+        iconSize: 35,
+        iconGap: 0,
+        padding: EdgeInsets.symmetric(horizontal: 2),
+        borderType: ButtonBorderType.circle,
+        colors: (
+          fontColor: Colors.white,
+          bgColor: Color(0x00FFFFFF),
+          borderColor: Color(0x00FFFFFF),
+          iconColor: Colors.white,
+        ),
+        gradient: LinearGradient(colors: [Colors.red, Colors.orange.shade700]),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black54,
+            offset: Offset(2.0, 2.0),
+            blurRadius: 4.0,
+          ),
+        ],
+        click: () => {},
+      ),
     ],
   ),
 ];
