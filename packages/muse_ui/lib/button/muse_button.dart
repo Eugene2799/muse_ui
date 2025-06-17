@@ -22,6 +22,8 @@ class MuseButton extends StatefulWidget {
     this.autofocus = false,
     this.iconPosition = IconAlignment.start,
     this.padding,
+    this.gradient,
+    this.boxShadow,
     this.width,
     this.height,
     this.fontSize,
@@ -44,6 +46,8 @@ class MuseButton extends StatefulWidget {
   final bool autofocus;
   final IconAlignment iconPosition;
   final EdgeInsetsGeometry? padding;
+  final Gradient? gradient;
+  final List<BoxShadow>? boxShadow;
   final double? width;
   final double? height;
   final double? fontSize;
@@ -154,7 +158,22 @@ class _MuseButtonState extends State<MuseButton> {
     double boxHeight = widget.height ?? widget.size.height;
     double? boxWidth = widget.width;
     if (widget.borderType == ButtonBorderType.circle) boxWidth = boxHeight;
-    return SizedBox(height: boxHeight, width: boxWidth, child: child);
+    if (widget.gradient == null && widget.boxShadow == null) {
+      return SizedBox(height: boxHeight, width: boxWidth, child: child);
+    } else {
+      return SizedBox(
+        height: boxHeight,
+        width: boxWidth,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: widget.gradient, //背景渐变
+            borderRadius: BorderRadius.circular(widget.borderType.radius),
+            boxShadow: widget.boxShadow,
+          ),
+          child: child,
+        ),
+      );
+    }
   }
 
   Widget _normalButton(ButtonStyle style) {
