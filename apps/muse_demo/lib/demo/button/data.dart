@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:muse_demo/types.dart';
+import 'package:muse_demo/shared/styles.dart';
+import 'package:muse_demo/shared/types.dart';
 import 'package:muse_icons/muse_icons.dart';
 import 'package:muse_ui/button/muse_button.dart';
 import 'package:muse_ui/button/types.dart';
@@ -260,6 +261,52 @@ List<DemoList> demoButton = [
         type: ButtonType.primary,
         width: double.infinity,
         text: "块级元素",
+        click: () => {},
+      ),
+      MuseButton(
+        slot: Text("块级元素", style: TextStyle(fontWeight: FontWeight.bold)),
+        width: double.infinity,
+        colors: listButtonColors,
+        borderType: ButtonBorderType.round,
+        icon: Icons.arrow_forward_ios,
+        axisSet: (
+          size: MainAxisSize.max,
+          alignment: MainAxisAlignment.spaceBetween,
+        ),
+        iconPosition: IconAlignment.end,
+        click: () => {},
+      ),
+      MuseButton(
+        slot: Text("块级元素", style: TextStyle(fontWeight: FontWeight.bold)),
+        nativeType: ButtonNativeType.plain,
+        width: double.infinity,
+        colors: (
+          fontColor: Color(0xFF34495e),
+          bgColor: Colors.white,
+          borderColor: Colors.black26,
+          iconColor: Color(0xFFb6c3d2),
+        ),
+        borderType: ButtonBorderType.round,
+        icon: Icons.arrow_forward_ios,
+        axisSet: (
+          size: MainAxisSize.max,
+          alignment: MainAxisAlignment.spaceBetween,
+        ),
+        iconPosition: IconAlignment.end,
+        click: () => {},
+      ),
+      MuseButton(
+        slot: Text("块级元素", style: TextStyle(fontWeight: FontWeight.bold)),
+        nativeType: ButtonNativeType.text,
+        width: double.infinity,
+        colors: listButtonColors,
+        borderType: ButtonBorderType.round,
+        icon: Icons.arrow_forward_ios,
+        axisSet: (
+          size: MainAxisSize.max,
+          alignment: MainAxisAlignment.spaceBetween,
+        ),
+        iconPosition: IconAlignment.end,
         click: () => {},
       ),
     ],

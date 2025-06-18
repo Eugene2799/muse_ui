@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:muse_demo/demo/button/button_page.dart';
+import 'package:muse_demo/demo/index_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.white),
       ),
-      home: const ButtonPage(title: 'Button'),
+      home: const IndexPage(),
     );
   }
 }

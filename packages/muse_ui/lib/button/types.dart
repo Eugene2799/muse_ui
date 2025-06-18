@@ -39,6 +39,8 @@ enum ButtonSize {
   const ButtonSize(this.size, this.height, this.padding);
 }
 
+typedef MainAxisSet = ({MainAxisSize? size, MainAxisAlignment? alignment});
+
 typedef ButtonColors =
     ({Color fontColor, Color bgColor, Color borderColor, Color? iconColor});
 
@@ -50,5 +52,5 @@ typedef MuseButtonStyles =
       ButtonColors colors,
       ButtonBorderType borderType,
       bool hairline,
-      IconAlignment iconPosition,
+      IconAlignment? iconPosition,
     });
