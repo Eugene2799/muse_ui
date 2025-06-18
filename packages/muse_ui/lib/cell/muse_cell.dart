@@ -137,10 +137,21 @@ class MuseCell extends StatelessWidget {
     }
 
     Widget cellBox = center ? cellCenterBox() : cellNormalBox();
-    Widget museCell = getClickable ? InkWell(child: cellBox) : cellBox;
+    Widget clickableWidget = getClickable ? InkWell(child: cellBox) : cellBox;
+    Widget museCell =
+        border
+            ? Padding(
+              padding: EdgeInsets.fromLTRB(16, 10, 16, 0),
+              child: Column(
+                children: [clickableWidget, SizedBox(height: 10), divider],
+              ),
+            )
+            : Padding(
+              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+              child: clickableWidget,
+            );
 
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+    return DecoratedBox(
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(0),
