@@ -5,7 +5,7 @@ import 'package:muse_icons/muse_icons.dart';
 import 'package:muse_ui/button/muse_button.dart';
 import 'package:muse_ui/button/types.dart';
 
-List<DemoList> demoButton = [
+List<DemoList> mockButton = [
   (
     title: "按钮类型",
     list: [
