@@ -8,10 +8,12 @@ class MuseCell extends StatelessWidget {
     this.icon,
     this.size = CellSize.normal,
     this.title,
-    this.slotTitle,
     this.value,
-    this.slotValue,
     this.label,
+    this.slotIcon,
+    this.slotRightIcon,
+    this.slotTitle,
+    this.slotValue,
     this.slotLabel,
     this.center = false,
     this.clickable = false,
@@ -25,10 +27,12 @@ class MuseCell extends StatelessWidget {
   final IconData? icon;
   final CellSize size;
   final String? title;
-  final Widget? slotTitle;
   final String? value;
-  final Widget? slotValue;
   final String? label;
+  final Widget? slotIcon;
+  final Widget? slotRightIcon;
+  final Widget? slotTitle;
+  final Widget? slotValue;
   final Widget? slotLabel;
   final bool center;
   final bool isLink;
@@ -38,21 +42,69 @@ class MuseCell extends StatelessWidget {
   final ArrowDirection arrowDirection;
   final VoidCallback? click;
 
-  Widget? _renderLabel() {
-    if (slotLabel != null) return slotLabel;
-    final currentLabel = label;
-    if (currentLabel != null) {
-      return Text(
-        currentLabel,
-        style: TextStyle(fontSize: Default.fontSize),
-        textAlign: TextAlign.justify,
-      );
-    }
-    return null;
+  static const _defaultTextStyle = TextStyle(fontSize: Default.fontSize);
+  static const _defaultTextAlign = TextAlign.justify;
+
+  Widget _renderTextWidget(Widget? slotWidget, String? text) {
+    return slotWidget ??
+        (text != null
+            ? Text(text, style: _defaultTextStyle, textAlign: _defaultTextAlign)
+            : SizedBox());
   }
+
+  Widget _buildIconText(Widget? optionalWidget, Widget mainWidget) {
+    return optionalWidget != null
+        ? Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [optionalWidget, mainWidget],
+        )
+        : mainWidget;
+  }
+
+  Widget _renderLabel() => _renderTextWidget(slotLabel, label);
+
+  Widget _renderTitle() => _renderTextWidget(slotTitle, title);
+
+  Widget _renderValue() => _renderTextWidget(slotValue, value);
+
+  Widget? _renderIcon() {
+    return slotIcon ?? (icon != null ? Icon(icon!) : null);
+  }
+
+  Widget? _renderRightIcon() {
+    return slotRightIcon ?? (isLink ? Icon(arrowDirection.icon) : null);
+  }
+
+  Widget getTitle() => _buildIconText(_renderIcon(), _renderTitle());
+
+  Widget getValue() => _buildIconText(_renderRightIcon(), _renderValue());
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    final bool getClickable = clickable || isLink;
+    Widget cellCenterBox = Row(
+      children: [
+        Expanded(
+          flex: 1,
+          child: Column(children: [getTitle(), _renderLabel()]),
+        ),
+        Expanded(flex: 1, child: getValue()),
+      ],
+    );
+    Widget cellNormalBox = Column(
+      children: [
+        Row(
+          children: [
+            Expanded(flex: 1, child: getTitle()),
+            Expanded(flex: 1, child: getValue()),
+          ],
+        ),
+        _renderLabel(),
+      ],
+    );
+    Widget cellBox = center ? cellCenterBox : cellNormalBox;
+    Widget museCell = getClickable ? InkWell(child: cellBox) : cellBox;
+
+    return museCell;
   }
 }
