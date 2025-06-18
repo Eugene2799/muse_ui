@@ -1,13 +1,20 @@
 import 'package:flutter/material.dart';
 
-import '../styles.dart';
+import '../shared/styles.dart';
 
 class ListItem extends StatelessWidget {
-  const ListItem({super.key, required this.title, required this.children});
+  const ListItem({
+    super.key,
+    required this.title,
+    required this.children,
+    this.runSpacing = 4.0,
+  });
 
   final String title;
 
   final List<Widget> children;
+
+  final double runSpacing;
 
   @override
   Widget build(BuildContext context) {
@@ -18,7 +25,7 @@ class ListItem extends StatelessWidget {
         SizedBox(height: 10),
         Wrap(
           spacing: 8.0,
-          runSpacing: 4.0,
+          runSpacing: runSpacing,
           crossAxisAlignment: WrapCrossAlignment.center,
           children: children,
         ),

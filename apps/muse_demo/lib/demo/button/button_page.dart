@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:muse_demo/types.dart';
+import 'package:muse_demo/shared/types.dart';
 import 'package:muse_demo/widgets/list_item.dart';
 
 import 'data.dart';

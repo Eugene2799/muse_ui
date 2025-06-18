@@ -17,6 +17,8 @@ class MuseElevatedButton extends ElevatedButton {
     super.statesController,
     IconData? iconData,
     Widget? label,
+    MainAxisSize? axisSize,
+    MainAxisAlignment? alignment,
     IconAlignment? iconAlignment,
   }) : super(
          autofocus: autofocus ?? false,
@@ -28,6 +30,8 @@ class MuseElevatedButton extends ElevatedButton {
                    label: label,
                    gap: gap ?? Default.gap,
                    buttonStyle: style,
+                   axisSize: axisSize,
+                   alignment: alignment,
                    iconAlignment: iconAlignment,
                  ),
        );
@@ -68,6 +72,8 @@ class _MuseElevatedButtonWithIconChild extends StatelessWidget {
     required this.label,
     required this.icon,
     required this.buttonStyle,
+    required this.axisSize,
+    required this.alignment,
     required this.iconAlignment,
     required this.gap,
   });
@@ -75,6 +81,8 @@ class _MuseElevatedButtonWithIconChild extends StatelessWidget {
   final Widget? label;
   final Widget icon;
   final ButtonStyle? buttonStyle;
+  final MainAxisSize? axisSize;
+  final MainAxisAlignment? alignment;
   final IconAlignment? iconAlignment;
   final double gap;
 
@@ -88,10 +96,14 @@ class _MuseElevatedButtonWithIconChild extends StatelessWidget {
         elevatedButtonTheme.style?.iconAlignment ??
         buttonStyle?.iconAlignment ??
         IconAlignment.start;
+    final MainAxisAlignment effectiveAlignment =
+        alignment ?? MainAxisAlignment.center;
+    final MainAxisSize effectiveAxisSize = axisSize ?? MainAxisSize.min;
     final Widget labelBox =
         label != null ? Flexible(child: label!) : SizedBox();
     return Row(
-      mainAxisSize: MainAxisSize.min,
+      mainAxisSize: effectiveAxisSize,
+      mainAxisAlignment: effectiveAlignment,
       children:
           effectiveIconAlignment == IconAlignment.start
               ? Utils.getLRList(icon, gap, labelBox)

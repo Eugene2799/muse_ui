@@ -20,7 +20,8 @@ class MuseButton extends StatefulWidget {
     this.hairline = false,
     this.disabled = false,
     this.autofocus = false,
-    this.iconPosition = IconAlignment.start,
+    this.axisSet,
+    this.iconPosition,
     this.padding,
     this.gradient,
     this.boxShadow,
@@ -44,7 +45,8 @@ class MuseButton extends StatefulWidget {
   final bool hairline;
   final bool disabled;
   final bool autofocus;
-  final IconAlignment iconPosition;
+  final MainAxisSet? axisSet;
+  final IconAlignment? iconPosition;
   final EdgeInsetsGeometry? padding;
   final Gradient? gradient;
   final List<BoxShadow>? boxShadow;
@@ -180,6 +182,8 @@ class _MuseButtonState extends State<MuseButton> {
     return _createButton(
       MuseElevatedButton(
         style: style,
+        axisSize: widget.axisSet?.size,
+        alignment: widget.axisSet?.alignment,
         iconAlignment: widget.iconPosition,
         gap: widget.iconGap,
         iconData: widget.icon,
@@ -194,6 +198,8 @@ class _MuseButtonState extends State<MuseButton> {
     return _createButton(
       MuseTextButton(
         style: style,
+        axisSize: widget.axisSet?.size,
+        alignment: widget.axisSet?.alignment,
         iconAlignment: widget.iconPosition,
         gap: widget.iconGap,
         iconData: widget.icon,
@@ -208,6 +214,8 @@ class _MuseButtonState extends State<MuseButton> {
     return _createButton(
       MuseOutlinedButton(
         style: style,
+        axisSize: widget.axisSet?.size,
+        alignment: widget.axisSet?.alignment,
         iconAlignment: widget.iconPosition,
         gap: widget.iconGap,
         iconData: widget.icon,
