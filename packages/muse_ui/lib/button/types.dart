@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:muse_ui/shared/default.dart';
 
 enum ButtonType {
-  normal(Default.colorBorder),
+  normal(Default.colorFontGray),
   primary(Default.colorPrimary),
   info(Default.colorInfo),
   warning(Default.colorWarning),

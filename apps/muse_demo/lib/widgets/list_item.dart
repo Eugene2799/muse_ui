@@ -7,29 +7,35 @@ class ListItem extends StatelessWidget {
     super.key,
     required this.title,
     required this.children,
-    this.runSpacing = 4.0,
+    this.padding,
+    this.runSpacing,
   });
 
   final String title;
-
   final List<Widget> children;
-
-  final double runSpacing;
+  final double? padding;
+  final double? runSpacing;
 
   @override
   Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: subtitleStyle),
         SizedBox(height: 10),
-        Wrap(
-          spacing: 8.0,
-          runSpacing: runSpacing,
-          crossAxisAlignment: WrapCrossAlignment.center,
-          children: children,
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16.0),
+          child: Text(title, style: subtitleStyle),
         ),
         SizedBox(height: 10),
+        Padding(
+          padding: EdgeInsets.symmetric(horizontal: padding ?? 16.0),
+          child: Wrap(
+            spacing: 8.0,
+            runSpacing: runSpacing ?? 4.0,
+            crossAxisAlignment: WrapCrossAlignment.center,
+            children: children,
+          ),
+        ),
       ],
     );
   }
