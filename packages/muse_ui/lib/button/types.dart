@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:muse_ui/shared/default.dart';
 
 enum ButtonType {
-  normal(Color(0xFF969799)),
-  primary(Color(0xFF07c160)),
-  info(Color(0xFF1989fa)),
-  warning(Color(0xFFff976a)),
-  danger(Color(0xFFea3425));
+  normal(Default.colorFontGray),
+  primary(Default.colorPrimary),
+  info(Default.colorInfo),
+  warning(Default.colorWarning),
+  danger(Default.colorDanger);
 
   final Color color;
 
@@ -13,10 +14,10 @@ enum ButtonType {
 }
 
 enum ButtonBorderType {
-  normal(2.0),
-  round(999.0),
-  circle(999.0),
-  square(0.0);
+  normal(Default.radius),
+  round(Default.radiusRound),
+  circle(Default.radiusRound),
+  square(Default.radiusSquare);
 
   final double radius;
 
@@ -26,10 +27,10 @@ enum ButtonBorderType {
 enum ButtonNativeType { normal, plain, text }
 
 enum ButtonSize {
-  large(16.0, 50.0, EdgeInsets.symmetric(horizontal: 30)),
-  normal(14.0, 44.0, EdgeInsets.symmetric(horizontal: 15)),
-  small(12.0, 32.0, EdgeInsets.symmetric(horizontal: 8)),
-  mini(10.1, 24.0, EdgeInsets.symmetric(horizontal: 0));
+  large(Default.fontSizeLarge, 50.0, EdgeInsets.symmetric(horizontal: 30)),
+  normal(Default.fontSize, 44.0, EdgeInsets.symmetric(horizontal: 15)),
+  small(Default.fontSizeSmall, 32.0, EdgeInsets.symmetric(horizontal: 8)),
+  mini(Default.fontSizeMini, 24.0, EdgeInsets.symmetric(horizontal: 0));
 
   final double size;
   final double height;
@@ -37,6 +38,8 @@ enum ButtonSize {
 
   const ButtonSize(this.size, this.height, this.padding);
 }
+
+typedef MainAxisSet = ({MainAxisSize? size, MainAxisAlignment? alignment});
 
 typedef ButtonColors =
     ({Color fontColor, Color bgColor, Color borderColor, Color? iconColor});
@@ -49,5 +52,5 @@ typedef MuseButtonStyles =
       ButtonColors colors,
       ButtonBorderType borderType,
       bool hairline,
-      IconAlignment iconPosition,
+      IconAlignment? iconPosition,
     });

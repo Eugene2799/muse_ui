@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:muse_ui/button/styles.dart';
+import 'package:muse_ui/shared/default.dart';
 import 'package:muse_ui/shared/utils.dart';
 
 class MuseOutlinedButton extends OutlinedButton {
@@ -17,6 +17,8 @@ class MuseOutlinedButton extends OutlinedButton {
     super.statesController,
     IconData? iconData,
     Widget? label,
+    MainAxisSize? axisSize,
+    MainAxisAlignment? alignment,
     IconAlignment? iconAlignment,
   }) : super(
          autofocus: autofocus ?? false,
@@ -26,8 +28,10 @@ class MuseOutlinedButton extends OutlinedButton {
                  : _MuseOutlinedButtonWithIconChild(
                    icon: Icon(iconData),
                    label: label,
-                   gap: gap ?? defaultGap,
+                   gap: gap ?? Default.gap,
                    buttonStyle: style,
+                   axisSize: axisSize,
+                   alignment: alignment,
                    iconAlignment: iconAlignment,
                  ),
        );
@@ -39,10 +43,11 @@ class MuseOutlinedButton extends OutlinedButton {
       return super.defaultStyleOf(context);
     }
     final ButtonStyle buttonStyle = super.defaultStyleOf(context);
-    final double defaultFontSize =
-        buttonStyle.textStyle?.resolve(const <WidgetState>{})?.fontSize ?? 14.0;
+    final double fontSize =
+        buttonStyle.textStyle?.resolve(const <WidgetState>{})?.fontSize ??
+        Default.fontSize;
     final double effectiveTextScale =
-        MediaQuery.textScalerOf(context).scale(defaultFontSize) / 14.0;
+        MediaQuery.textScalerOf(context).scale(fontSize) / Default.fontSize;
     final EdgeInsetsGeometry scaledPadding = ButtonStyleButton.scaledPadding(
       const EdgeInsetsDirectional.fromSTEB(16, 0, 24, 0),
       const EdgeInsetsDirectional.fromSTEB(8, 0, 12, 0),
@@ -60,6 +65,8 @@ class _MuseOutlinedButtonWithIconChild extends StatelessWidget {
     required this.label,
     required this.icon,
     required this.buttonStyle,
+    required this.axisSize,
+    required this.alignment,
     required this.iconAlignment,
     required this.gap,
   });
@@ -67,6 +74,8 @@ class _MuseOutlinedButtonWithIconChild extends StatelessWidget {
   final Widget? label;
   final Widget icon;
   final ButtonStyle? buttonStyle;
+  final MainAxisSize? axisSize;
+  final MainAxisAlignment? alignment;
   final IconAlignment? iconAlignment;
   final double gap;
 
@@ -80,10 +89,14 @@ class _MuseOutlinedButtonWithIconChild extends StatelessWidget {
         outlinedButtonTheme.style?.iconAlignment ??
         buttonStyle?.iconAlignment ??
         IconAlignment.start;
+    final MainAxisAlignment effectiveAlignment =
+        alignment ?? MainAxisAlignment.center;
+    final MainAxisSize effectiveAxisSize = axisSize ?? MainAxisSize.min;
     final Widget labelBox =
         label != null ? Flexible(child: label!) : SizedBox();
     return Row(
-      mainAxisSize: MainAxisSize.min,
+      mainAxisSize: effectiveAxisSize,
+      mainAxisAlignment: effectiveAlignment,
       children:
           effectiveIconAlignment == IconAlignment.start
               ? Utils.getLRList(icon, gap, labelBox)

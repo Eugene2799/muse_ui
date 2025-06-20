@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:muse_ui/shared/default.dart';
 
 import 'muse_elevated_button.dart';
 import 'muse_outlined_button.dart';
@@ -19,9 +20,11 @@ class MuseButton extends StatefulWidget {
     this.hairline = false,
     this.disabled = false,
     this.autofocus = false,
-    this.iconPrefix,
-    this.iconPosition = IconAlignment.start,
+    this.axisSet,
+    this.iconPosition,
     this.padding,
+    this.gradient,
+    this.boxShadow,
     this.width,
     this.height,
     this.fontSize,
@@ -34,7 +37,6 @@ class MuseButton extends StatefulWidget {
 
   final String? text;
   final IconData? icon;
-  final IconData? iconPrefix;
   final ButtonType type;
   final ButtonSize size;
   final ButtonNativeType nativeType;
@@ -43,8 +45,11 @@ class MuseButton extends StatefulWidget {
   final bool hairline;
   final bool disabled;
   final bool autofocus;
-  final IconAlignment iconPosition;
+  final MainAxisSet? axisSet;
+  final IconAlignment? iconPosition;
   final EdgeInsetsGeometry? padding;
+  final Gradient? gradient;
+  final List<BoxShadow>? boxShadow;
   final double? width;
   final double? height;
   final double? fontSize;
@@ -60,15 +65,11 @@ class MuseButton extends StatefulWidget {
 }
 
 class _MuseButtonState extends State<MuseButton> {
-  static const int disabledAlpha = 128;
-  static const int enabledAlpha = 255;
-  late final IconData? iconData;
   late final Widget btnWidget;
 
   @override
   void initState() {
     super.initState();
-    iconData = widget.icon ?? widget.iconPrefix;
     btnWidget = _getButton(widget.nativeType);
   }
 
@@ -77,12 +78,12 @@ class _MuseButtonState extends State<MuseButton> {
 
   ButtonColors _getColor(ButtonColors colors) {
     bool isNormal = widget.type == ButtonType.normal;
-    Color fontColor = isNormal ? const Color(0xFF969799) : colors.fontColor;
+    Color fontColor = isNormal ? Default.colorFont : colors.fontColor;
     Color bgColor =
         isNormal && widget.nativeType == ButtonNativeType.normal
             ? Colors.white
             : colors.bgColor;
-    int alpha = widget.disabled ? disabledAlpha : enabledAlpha;
+    int alpha = widget.disabled ? Default.alphaDisable : Default.alphaEnable;
     return (
       fontColor: fontColor.withAlpha(alpha),
       bgColor: bgColor.withAlpha(alpha),
@@ -159,16 +160,33 @@ class _MuseButtonState extends State<MuseButton> {
     double boxHeight = widget.height ?? widget.size.height;
     double? boxWidth = widget.width;
     if (widget.borderType == ButtonBorderType.circle) boxWidth = boxHeight;
-    return SizedBox(height: boxHeight, width: boxWidth, child: child);
+    if (widget.gradient == null && widget.boxShadow == null) {
+      return SizedBox(height: boxHeight, width: boxWidth, child: child);
+    } else {
+      return SizedBox(
+        height: boxHeight,
+        width: boxWidth,
+        child: DecoratedBox(
+          decoration: BoxDecoration(
+            gradient: widget.gradient, //背景渐变
+            borderRadius: BorderRadius.circular(widget.borderType.radius),
+            boxShadow: widget.boxShadow,
+          ),
+          child: child,
+        ),
+      );
+    }
   }
 
   Widget _normalButton(ButtonStyle style) {
     return _createButton(
       MuseElevatedButton(
         style: style,
+        axisSize: widget.axisSet?.size,
+        alignment: widget.axisSet?.alignment,
         iconAlignment: widget.iconPosition,
         gap: widget.iconGap,
-        iconData: iconData,
+        iconData: widget.icon,
         onPressed: widget.disabled ? null : widget.click,
         onLongPress: widget.disabled ? null : widget.longPress,
         label: _getButtonChild(),
@@ -180,9 +198,11 @@ class _MuseButtonState extends State<MuseButton> {
     return _createButton(
       MuseTextButton(
         style: style,
+        axisSize: widget.axisSet?.size,
+        alignment: widget.axisSet?.alignment,
         iconAlignment: widget.iconPosition,
         gap: widget.iconGap,
-        iconData: iconData,
+        iconData: widget.icon,
         onPressed: widget.disabled ? null : widget.click,
         onLongPress: widget.disabled ? null : widget.longPress,
         label: _getButtonChild(),
@@ -194,9 +214,11 @@ class _MuseButtonState extends State<MuseButton> {
     return _createButton(
       MuseOutlinedButton(
         style: style,
+        axisSize: widget.axisSet?.size,
+        alignment: widget.axisSet?.alignment,
         iconAlignment: widget.iconPosition,
         gap: widget.iconGap,
-        iconData: iconData,
+        iconData: widget.icon,
         onPressed: widget.disabled ? null : widget.click,
         onLongPress: widget.disabled ? null : widget.longPress,
         label: _getButtonChild(),

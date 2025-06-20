@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:muse_ui/button/styles.dart';
+import 'package:muse_ui/shared/default.dart';
 import 'package:muse_ui/shared/utils.dart';
 
 class MuseElevatedButton extends ElevatedButton {
@@ -17,6 +17,8 @@ class MuseElevatedButton extends ElevatedButton {
     super.statesController,
     IconData? iconData,
     Widget? label,
+    MainAxisSize? axisSize,
+    MainAxisAlignment? alignment,
     IconAlignment? iconAlignment,
   }) : super(
          autofocus: autofocus ?? false,
@@ -26,8 +28,10 @@ class MuseElevatedButton extends ElevatedButton {
                  : _MuseElevatedButtonWithIconChild(
                    icon: Icon(iconData),
                    label: label,
-                   gap: gap ?? defaultGap,
+                   gap: gap ?? Default.gap,
                    buttonStyle: style,
+                   axisSize: axisSize,
+                   alignment: alignment,
                    iconAlignment: iconAlignment,
                  ),
        );
@@ -36,10 +40,11 @@ class MuseElevatedButton extends ElevatedButton {
   ButtonStyle defaultStyleOf(BuildContext context) {
     final bool useMaterial3 = Theme.of(context).useMaterial3;
     final ButtonStyle buttonStyle = super.defaultStyleOf(context);
-    final double defaultFontSize =
-        buttonStyle.textStyle?.resolve(const <WidgetState>{})?.fontSize ?? 14.0;
+    final double fontSize =
+        buttonStyle.textStyle?.resolve(const <WidgetState>{})?.fontSize ??
+        Default.fontSize;
     final double effectiveTextScale =
-        MediaQuery.textScalerOf(context).scale(defaultFontSize) / 14.0;
+        MediaQuery.textScalerOf(context).scale(fontSize) / Default.fontSize;
 
     final EdgeInsetsGeometry scaledPadding =
         useMaterial3
@@ -56,6 +61,7 @@ class MuseElevatedButton extends ElevatedButton {
               effectiveTextScale,
             );
     return buttonStyle.copyWith(
+      shadowColor: WidgetStatePropertyAll<Color>(Color(0x00FFFFFF)),
       padding: WidgetStatePropertyAll<EdgeInsetsGeometry>(scaledPadding),
     );
   }
@@ -66,6 +72,8 @@ class _MuseElevatedButtonWithIconChild extends StatelessWidget {
     required this.label,
     required this.icon,
     required this.buttonStyle,
+    required this.axisSize,
+    required this.alignment,
     required this.iconAlignment,
     required this.gap,
   });
@@ -73,6 +81,8 @@ class _MuseElevatedButtonWithIconChild extends StatelessWidget {
   final Widget? label;
   final Widget icon;
   final ButtonStyle? buttonStyle;
+  final MainAxisSize? axisSize;
+  final MainAxisAlignment? alignment;
   final IconAlignment? iconAlignment;
   final double gap;
 
@@ -86,10 +96,14 @@ class _MuseElevatedButtonWithIconChild extends StatelessWidget {
         elevatedButtonTheme.style?.iconAlignment ??
         buttonStyle?.iconAlignment ??
         IconAlignment.start;
+    final MainAxisAlignment effectiveAlignment =
+        alignment ?? MainAxisAlignment.center;
+    final MainAxisSize effectiveAxisSize = axisSize ?? MainAxisSize.min;
     final Widget labelBox =
         label != null ? Flexible(child: label!) : SizedBox();
     return Row(
-      mainAxisSize: MainAxisSize.min,
+      mainAxisSize: effectiveAxisSize,
+      mainAxisAlignment: effectiveAlignment,
       children:
           effectiveIconAlignment == IconAlignment.start
               ? Utils.getLRList(icon, gap, labelBox)

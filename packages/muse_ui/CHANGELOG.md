@@ -1,3 +1,7 @@
+## 0.0.2
+
+ - Add MuseCell and MuseCellGroup feature.
+
 ## 0.0.1+2
 
  - Bump "muse_ui" to `0.0.1+2`.
