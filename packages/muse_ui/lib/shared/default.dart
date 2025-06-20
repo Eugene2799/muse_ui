@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'package:flutter/painting.dart';
 
 class Default {
   static const int alphaEnable = 255;
@@ -19,4 +19,9 @@ class Default {
   static const double radius = 2.0;
   static const double radiusRound = 999.0;
   static const double radiusSquare = 0.0;
+  static const textAlign = TextAlign.justify;
+
+  static TextStyle textStyle({double size = fontSize, color = colorFont}) {
+    return TextStyle(fontSize: size, color: color);
+  }
 }

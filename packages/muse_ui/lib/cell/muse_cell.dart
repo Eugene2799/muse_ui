@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:muse_ui/cell/types.dart';
 import 'package:muse_ui/shared/default.dart';
+import 'package:muse_ui/shared/utils.dart';
 
 class MuseCell extends StatelessWidget {
   const MuseCell({
     super.key,
     this.icon,
+    this.iconSize,
+    this.rightIconSize,
+    this.iconColor,
+    this.rightIconColor,
     this.size = CellSize.normal,
     this.title,
     this.value,
@@ -26,6 +31,10 @@ class MuseCell extends StatelessWidget {
 
   final IconData? icon;
   final CellSize size;
+  final double? iconSize;
+  final double? rightIconSize;
+  final Color? iconColor;
+  final Color? rightIconColor;
   final String? title;
   final String? value;
   final String? label;
@@ -42,60 +51,64 @@ class MuseCell extends StatelessWidget {
   final ArrowDirection arrowDirection;
   final VoidCallback? click;
 
-  static const _titleStyle = TextStyle(fontSize: Default.fontSize);
-  static const _valueStyle = TextStyle(
-    fontSize: Default.fontSize,
-    color: Default.colorFontGray,
+  Widget? _renderTitle() => Utils.renderText(
+    slotTitle,
+    title,
+    Alignment.centerLeft,
+    size == CellSize.normal
+        ? Default.textStyle()
+        : Default.textStyle(size: Default.fontSizeLarge),
   );
-  static const _labelStyle = TextStyle(
-    fontSize: Default.fontSizeSmall,
-    color: Default.colorFontGray,
-  );
-  static const _defaultTextAlign = TextAlign.justify;
 
-  Widget? _renderTextWidget(
-    Widget? slotWidget,
-    String? text,
-    AlignmentGeometry alignment,
-    TextStyle? textStyle,
-  ) {
-    return slotWidget ??
-        (text != null
-            ? Align(
-              alignment: alignment,
-              child: Text(text, style: textStyle, textAlign: _defaultTextAlign),
+  Widget? _renderValue() => Utils.renderText(
+    slotValue,
+    value,
+    Alignment.centerRight,
+    Default.textStyle(color: Default.colorFontGray),
+  );
+
+  Widget? _renderIcon() {
+    return slotIcon ??
+        (icon != null
+            ? Icon(
+              icon!,
+              size: iconSize ?? Default.fontSize,
+              color: iconColor ?? Default.colorFont,
             )
             : null);
   }
 
-  Widget? _buildIconText(Widget? w1, Widget? w2) {
-    if (w1 != null && w2 != null) {
-      return Row(mainAxisSize: MainAxisSize.min, children: [w1, w2]);
-    } else {
-      return w1 ?? w2;
-    }
-  }
-
-  Widget? _renderTitle() =>
-      _renderTextWidget(slotTitle, title, Alignment.centerLeft, _titleStyle);
-
-  Widget? _renderValue() =>
-      _renderTextWidget(slotValue, value, Alignment.centerRight, _valueStyle);
-
-  Widget? _renderIcon() {
-    return slotIcon ?? (icon != null ? Icon(icon!) : null);
-  }
-
   Widget? _renderRightIcon() {
-    return slotRightIcon ?? (isLink ? Icon(arrowDirection.icon) : null);
+    return slotRightIcon ??
+        (isLink
+            ? Align(
+              alignment: Alignment.centerRight,
+              child: Icon(
+                arrowDirection.icon,
+                size: rightIconSize ?? Default.fontSize + 10,
+                color: rightIconColor ?? Default.colorFontGray,
+              ),
+            )
+            : null);
   }
 
-  Widget? getTitle() => _buildIconText(_renderIcon(), _renderTitle());
+  Widget? getTitle() => Utils.horizontalRow(_renderIcon(), _renderTitle());
 
-  Widget? getValue() => _buildIconText(_renderRightIcon(), _renderValue());
+  Widget? getValue() => Utils.horizontalRow(
+    _renderValue(),
+    _renderRightIcon(),
+    axisAlignment: MainAxisAlignment.end,
+  );
 
-  Widget? getLabel() =>
-      _renderTextWidget(slotLabel, label, Alignment.centerLeft, _labelStyle);
+  Widget? getLabel() => Utils.renderText(
+    slotLabel,
+    label,
+    Alignment.centerLeft,
+    Default.textStyle(
+      size: size == CellSize.normal ? Default.fontSizeSmall : Default.fontSize,
+      color: Default.colorFontGray,
+    ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -109,11 +122,15 @@ class MuseCell extends StatelessWidget {
       final tlWidget =
           labelWidget == null
               ? titleWidget
-              : Column(children: [titleWidget, labelWidget]);
+              : Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [titleWidget, labelWidget],
+              );
       if (getValue() == null) {
         return tlWidget;
       } else {
         return Row(
+          spacing: 5,
           children: [
             Expanded(flex: 1, child: tlWidget),
             Expanded(flex: 1, child: valueWidget),
@@ -152,10 +169,7 @@ class MuseCell extends StatelessWidget {
             );
 
     return DecoratedBox(
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(0),
-      ),
+      decoration: BoxDecoration(color: Colors.white),
       child: museCell,
     );
   }
